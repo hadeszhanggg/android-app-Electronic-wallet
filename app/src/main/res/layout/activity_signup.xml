@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1e90ff"
+    android:orientation="vertical"
+    tools:context=".Signup">
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="Welcome to"
+        android:textColor="@color/white"
+        android:textSize="10pt" />
+
+    <TextView
+        android:id="@+id/txtNT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:gravity="center"
+        android:text="NT money"
+        android:textColor="@color/black"
+        android:textSize="10pt"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edtName"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Your name ..."
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Your name ..."
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Your name ..."
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtDofB"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Your name ..."
+        android:inputType="text" />
+
+    <RadioGroup
+        android:id="@+id/grRdGender"
+        android:layout_width="match_parent"
+        android:layout_height="20pt"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rdMale"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="male"
+            android:textColor="@color/white"
+            android:textSize="30dp"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/rdFemale"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:text="female"
+            android:textColor="@color/white"
+            android:textSize="30dp"></RadioButton>
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/edtPass"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Password ..."
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/edtRePass"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="Repassword ..."
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="150dp"
+        android:backgroundTint="#ff0000"
+        android:text="Create account" />
+
+    <Button
+        android:id="@+id/btnTransferToSigninForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="Back to login!"
+        android:textColor="#ff0000" />
+</LinearLayout>

@@ -12,53 +12,40 @@ import android.widget.EditText;
 import android.widget.Toast;
 import java.net.URISyntaxException;
 public class MainActivity extends AppCompatActivity {
-    private Socket mSocket;
-    private EditText editTextUsername;
+    private Button btnSignin, btnTransferToSignupForm;
+    private EditText edtName, edtPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try{
-            mSocket = IO.socket("http://192.168.11.16:333");
-            mSocket.connect();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        editTextUsername = findViewById(R.id.editTextUsername);
-        Button btnLogin = findViewById(R.id.btnLogin);
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = editTextUsername.getText().toString().trim();
-                if (!username.isEmpty()) {
-                    mSocket.emit("login", username);
-                    Intent intent = new Intent(MainActivity.this, chat.class);
-                    intent.putExtra("username", username);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(MainActivity.this, "Please enter a username", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        addControl();
+        addEvent();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mSocket.disconnect();
-    }
-
-    private Emitter.Listener onChatMessage = new Emitter.Listener() {
+private void addControl()
+{
+    btnSignin=findViewById(R.id.btnSignin);
+    btnTransferToSignupForm=findViewById(R.id.btnTransferToSignupForm);
+    edtName=findViewById(R.id.edtName);
+    edtPass=findViewById(R.id.edtPass);
+}
+private void addEvent()
+{
+    btnTransferToSignupForm.setOnClickListener(new View.OnClickListener() {
         @Override
-        public void call(final Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String message = (String) args[0];
-                    Toast.makeText(MainActivity.this, message+"\n", Toast.LENGTH_SHORT).show();
-                }
-            });
+        public void onClick(View v) {
+            Intent it = new Intent(getApplicationContext(), Signup.class);
+            startActivity(it);
+            // Quick Notification
+            Toast.makeText(getApplicationContext(), "Close signin form", Toast.LENGTH_SHORT).show();
         }
-    };
+    });
+
+    btnSignin.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "Login successfully!", Toast.LENGTH_LONG).show();
+        }
+    });
+}
 }
