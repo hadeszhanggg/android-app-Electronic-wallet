@@ -1,10 +1,10 @@
-package com.example.electronicwallet;
+package com.example.electronicwallet.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://192.168.11.16:333/";
+    private static final String BASE_URL = "https://vapi.vnappmob.com/api/";
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
