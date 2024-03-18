@@ -5,12 +5,9 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.net.URISyntaxException;
-import android.view.View;
 public class chat extends AppCompatActivity {
     private Socket mSocket;
     private TextView textViewMessages;
@@ -20,7 +17,7 @@ public class chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         try {
-            mSocket = IO.socket("http://192.168.11.16:333"); // Đổi địa chỉ máy chủ của bạn
+            mSocket = IO.socket(getResources().getString(R.string.server_url));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

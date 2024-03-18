@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Electronic Wallet</string>
+    <string name="server_url">http://192.168.11.16:333</string>
 </resources>
