@@ -5,59 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#1e90ff"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/txtWelcome"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:textSize="10pt"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:text="Welcome to" />
-    <TextView
-        android:id="@+id/txtNT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10pt"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_marginTop="1dp"
-        android:textColor="@color/black"
-        android:text="NT money" />
+        android:layout_height="260dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtName"
-        android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Your name ..." />
-    <EditText
-        android:id="@+id/edtPass"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password ..."/>
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#dc143c"
+            android:text="Welcome to"
+            android:textColor="@color/white"
+            android:textSize="10pt" />
 
+        <TextView
+            android:id="@+id/txtNT"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="NT Money"
+            android:textColor="#dc143c"
+            android:textSize="10pt"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="100pt"
+            app:srcCompat="@drawable/logo" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:textSize="10pt"
+            android:gravity="center"
+            android:text="Username" />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:textSize="10pt"
+            android:hint="Your name ..."
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:textSize="10pt"
+            android:gravity="center"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:textSize="10pt"
+            android:hint="Password ..."
+            android:inputType="textPassword" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnSignin"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginLeft="150dp"
-        android:backgroundTint="#ff0000"
+        android:backgroundTint="#dc143c"
         android:text="Login" />
     <Button
         android:id="@+id/btnTransferToSignupForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:textColor="#ff0000"
-        android:backgroundTint="@color/white"
-        android:text="Created account!" />
+        android:layout_marginTop="225dp"
+        android:text="Created account!"
+        android:backgroundTint="#dc143c"/>
+
 </LinearLayout>

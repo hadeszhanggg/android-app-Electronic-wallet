@@ -6,21 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".chat">
-    <TextView
-        android:id="@+id/textViewMessages"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
 
-    <EditText
-        android:id="@+id/editTextMessage"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="634dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:hint="Enter message" />
+        android:layout_gravity="center"
+        android:backgroundTint="#1e90ff"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send" />
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="Send message"
+           android:backgroundTint="#1e90ff"
+            app:srcCompat="@drawable/send_icon" />
+
+        <EditText
+            android:id="@+id/editTextMessage"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Enter message" />
+
+    </LinearLayout>
+
 </LinearLayout>

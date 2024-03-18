@@ -4,30 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1e90ff"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Signup">
 
-    <TextView
-        android:id="@+id/txtWelcome"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:text="Welcome to"
-        android:textColor="@color/white"
-        android:textSize="10pt" />
+        android:layout_height="260dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtNT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:gravity="center"
-        android:text="NT money"
-        android:textColor="@color/black"
-        android:textSize="10pt"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#dc143c"
+            android:text="Welcome to"
+            android:textColor="@color/white"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/txtNT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="NT money"
+            android:textColor="#dc143c"
+            android:textSize="10pt"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="100pt"
+            app:srcCompat="@drawable/logo" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +52,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Username:" />
 
         <EditText
@@ -64,7 +74,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Email:" />
     <EditText
         android:id="@+id/edtEmail"
@@ -86,7 +95,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Address:" />
         <Spinner
             android:id="@+id/spinnerProvince"
@@ -106,7 +114,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Date of birth:" />
     <EditText
         android:id="@+id/edtDofB"
@@ -128,7 +135,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Gender:" />
     <RadioGroup
         android:id="@+id/grRdGender"
@@ -141,7 +147,6 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="male"
-            android:textColor="@color/white"
             android:textSize="20dp"></RadioButton>
 
         <RadioButton
@@ -150,7 +155,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="80dp"
             android:text="female"
-            android:textColor="@color/white"
             android:textSize="20dp"></RadioButton>
     </RadioGroup>
     </LinearLayout>
@@ -166,7 +170,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Password:" />
     <EditText
         android:id="@+id/edtPass"
@@ -188,7 +191,6 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
-            android:textColor="@color/white"
             android:text="Confirm password:" />
     <EditText
         android:id="@+id/edtRePass"
@@ -203,15 +205,16 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginLeft="150dp"
-        android:backgroundTint="#ff0000"
+        android:backgroundTint="#dc143c"
         android:text="Create account" />
 
     <Button
         android:id="@+id/btnTransferToSigninForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:layout_marginTop="100dp"
+        android:backgroundTint="#dc143c"
+        android:layout_marginTop="50dp"
         android:text="Back to login!"
-        android:textColor="#ff0000" />
+        android:textColor="@color/white" />
+
 </LinearLayout>

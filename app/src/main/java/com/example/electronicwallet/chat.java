@@ -25,13 +25,13 @@ public class chat extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        textViewMessages = findViewById(R.id.textViewMessages);
+        //textViewMessages = findViewById(R.id.textViewMessages);
         editTextMessage = findViewById(R.id.editTextMessage);
-        Button btnSend = findViewById(R.id.btnSend);
+       // Button btnSend = findViewById(R.id.btnSend);
 
         mSocket.connect();
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        /*btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message = editTextMessage.getText().toString().trim();
@@ -42,7 +42,7 @@ public class chat extends AppCompatActivity {
                     Toast.makeText(chat.this, "Please enter a message", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
         mSocket.on("chat message", onChatMessage);
     }
