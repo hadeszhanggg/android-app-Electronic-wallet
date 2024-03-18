@@ -6,19 +6,35 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import org.json.JSONObject;
+import java.io.IOException;
 import java.net.URISyntaxException;
+import com.example.electronicwallet.network.NodeJsApiService;
+import com.example.electronicwallet.network.NodeJsApiClient;
+import com.google.gson.JsonObject;
+import com.example.electronicwallet.models.User;
+import org.json.JSONException;
+
 public class MainActivity extends AppCompatActivity {
     private Button btnSignin, btnTransferToSignupForm;
     private EditText edtName, edtPass;
-
+    private NodeJsApiService apiSignin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        apiSignin=NodeJsApiClient.getNodeJsApiService();
         addControl();
         addEvent();
     }
@@ -44,7 +60,73 @@ private void addEvent()
     btnSignin.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "Login successfully!", Toast.LENGTH_LONG).show();
+            if(edtName.getText().toString().isEmpty()||edtPass.getText().toString().isEmpty())
+                Toast.makeText(getApplicationContext(), "Fill full information for login, please!", Toast.LENGTH_LONG).show();
+            else{
+                try{
+                    org.json.JSONObject jsonParams = new org.json.JSONObject();
+                    jsonParams.put("username", edtName.getText().toString());
+                    jsonParams.put("password", edtPass.getText().toString());
+                    // Gửi JSON đến API đăng nhập
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonParams.toString());
+                    Call<ResponseBody> call = apiSignin.signin(requestBody);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                try {
+                                    // Sử dụng JSONObject từ org.json
+                                    JSONObject jsonResponse = new JSONObject(response.body().string());
+                                    String accessToken = jsonResponse.getString("accessToken");
+                                    String refreshToken = jsonResponse.getString("refreshToken");
+                                    String id = jsonResponse.getString("id");
+                                    String username = jsonResponse.getString("username");
+                                    String email = jsonResponse.getString("email");
+                                    String address = jsonResponse.getString("address");
+                                    boolean gender = jsonResponse.getBoolean("gender");
+                                    String dateOfBirth = jsonResponse.getString("date_of_birth");
+                                    // Lưu thông tin người dùng vào đối tượng User
+                                    User user = new User();
+                                    user.setId(id);
+                                    user.setUsername(username);
+                                    user.setEmail(email);
+                                    user.setAddress(address);
+                                    user.setGender(gender);
+                                    user.setDateOfBirth(dateOfBirth);
+                                    // Lưu accessToken và refreshToken vào đối tượng User
+                                    user.setAccessToken(accessToken);
+                                    user.setRefreshToken(refreshToken);
+                                    Log.e("API_CALL", user.getUser());
+                                    Toast.makeText(MainActivity.this, "Signin successfully!", Toast.LENGTH_SHORT).show();
+                                } catch (JSONException | IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                // Xử lý khi nhận được phản hồi không thành công từ server
+                                String errorMessage = "";
+                                try {
+                                    JSONObject errorBody = new JSONObject(response.errorBody().string());
+                                    errorMessage = errorBody.getString("message");
+                                } catch (JSONException | IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Toast.makeText(MainActivity.this, "Failed to signin: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                Log.e("API_CALL", "Unsuccessful response: " + response.code());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            // Xử lý khi gặp lỗi trong quá trình gọi API
+                            Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("API_CALL", "Error: " + t.getMessage());
+                        }
+                    });
+                }catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     });
 }
