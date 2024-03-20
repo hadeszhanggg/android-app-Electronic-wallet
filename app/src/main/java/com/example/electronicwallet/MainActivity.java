@@ -1,9 +1,6 @@
 package com.example.electronicwallet;
-
+import com.google.gson.Gson;
 import androidx.appcompat.app.AppCompatActivity;
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,10 +16,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import com.example.electronicwallet.network.NodeJsApiService;
 import com.example.electronicwallet.network.NodeJsApiClient;
-import com.google.gson.JsonObject;
 import com.example.electronicwallet.models.User;
 import org.json.JSONException;
 
@@ -96,8 +91,8 @@ private void addEvent()
                                     // Lưu accessToken và refreshToken vào đối tượng User
                                     user.setAccessToken(accessToken);
                                     user.setRefreshToken(refreshToken);
-                                    Log.e("API_CALL", user.getUser());
                                     Toast.makeText(MainActivity.this, "Signin successfully!", Toast.LENGTH_SHORT).show();
+                                    sendDataToNextActivity(user);
                                 } catch (JSONException | IOException e) {
                                     e.printStackTrace();
                                 }
@@ -130,6 +125,19 @@ private void addEvent()
         }
     });
 }
+    private void sendDataToNextActivity(User user) {
+        if (user != null) {
+            // Tạo Intent để mở Activity mới
+            Intent intent = new Intent(MainActivity.this, chat.class);
+            // Truyền chuỗi JSON qua Intent
+            intent.putExtra("User", user);
+            // Khởi chạy Intent để mở Activity mới
+            startActivity(intent);
+        } else {
+            Toast.makeText(MainActivity.this, "User object is null", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();

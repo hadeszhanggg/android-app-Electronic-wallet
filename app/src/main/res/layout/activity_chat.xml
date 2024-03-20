@@ -6,21 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".chat">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="634dp"
         android:orientation="vertical">
+        <ListView
+            android:id="@+id/listViewMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:backgroundTint="#1e90ff"
         android:orientation="horizontal">
-
         <ImageButton
             android:id="@+id/btnSend"
             android:layout_width="100dp"
@@ -28,13 +29,10 @@
             android:contentDescription="Send message"
            android:backgroundTint="#1e90ff"
             app:srcCompat="@drawable/send_icon" />
-
         <EditText
-            android:id="@+id/editTextMessage"
+            android:id="@+id/mInputMessageView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:hint="Enter message" />
-
     </LinearLayout>
-
 </LinearLayout>

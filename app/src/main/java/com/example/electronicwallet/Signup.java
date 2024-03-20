@@ -112,6 +112,7 @@ public class Signup extends AppCompatActivity {
                                     }
                                     Toast.makeText(Signup.this, "Failed to signup account: " + errorMessage, Toast.LENGTH_SHORT).show();
                                     Log.e("API_CALL", "Unsuccessful response: " + response.code());
+                                    Log.e("API_CALL", "Unsuccessful response: " + response.message());
                                 }
                             }
 
