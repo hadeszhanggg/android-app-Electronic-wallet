@@ -128,7 +128,7 @@ private void addEvent()
 }
     private void sendDataToNextActivity(User user) {
         if (user != null) {
-            Intent intent = new Intent(MainActivity.this, chat.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.putExtra("User", user);
             startActivity(intent);
         } else {

@@ -6,15 +6,18 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
+import com.example.electronicwallet.models.User;
 public class ViewPagerAdapter extends FragmentStateAdapter {
+    private User user;
 
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, User user) {
         super(fragmentActivity);
+        this.user = user;
     }
 
-    public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, User user) {
         super(fragmentManager, lifecycle);
+        this.user = user;
     }
 
     @NonNull
@@ -22,13 +25,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new HomeFragment();
+                return HomeFragment.newInstance(user);
             case 1:
-                return new DepositFragment();
+                return DepositFragment.newInstance(user);
             case 2:
-                return new ChatFragment();
+                return ChatFragment.newInstance(user);
             default:
-                return new HomeFragment();
+                return HomeFragment.newInstance(user);
         }
     }
 
