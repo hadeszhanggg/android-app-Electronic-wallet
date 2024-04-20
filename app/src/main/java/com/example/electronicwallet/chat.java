@@ -23,33 +23,31 @@ import com.example.electronicwallet.network.Constants;
 public class chat extends AppCompatActivity {
     private User user;
     private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket("http://192.168.1.23:333");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
     private EditText mInputMessageView;
     private ListView listViewMessages;
     private ArrayAdapter<String> messageAdapter;
-    private String userId = "123";
-    private static final int CONNECT_TIMEOUT = 10000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Intent intent = getIntent();
-        user = (User)intent.getSerializableExtra("User");
-        try {
-            mSocket = IO.socket(Constants.SERVER_URL);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        user = (User) intent.getSerializableExtra("User");
+        if (user != null) {
+            // Tiếp tục xử lý với đối tượng user
+            mSocket.connect();
+            mSocket.emit("joinRoom", user.getID());
+        } else {
+            Toast.makeText(chat.this, "User object is null", Toast.LENGTH_SHORT).show();
         }
-
-        mInputMessageView = findViewById(R.id.mInputMessageView);
-        listViewMessages = findViewById(R.id.listViewMessages);
-
-        ArrayList<String> messageList = new ArrayList<>();
-        messageAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, messageList);
-        listViewMessages.setAdapter(messageAdapter);
-        mSocket.connect();
-        //Toast.makeText(chat.this, user.getID(), Toast.LENGTH_SHORT).show();
-        mSocket.emit("joinRoom", user.getID());
     }
+
 
     @Override
     protected void onDestroy() {

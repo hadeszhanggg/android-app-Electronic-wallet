@@ -28,7 +28,7 @@
             android:layout_height="100dp"
             android:contentDescription="Send message"
            android:backgroundTint="#1e90ff"
-            app:srcCompat="@drawable/send_icon" />
+            app:srcCompat="@drawable/chat_icon" />
         <EditText
             android:id="@+id/mInputMessageView"
             android:layout_width="match_parent"

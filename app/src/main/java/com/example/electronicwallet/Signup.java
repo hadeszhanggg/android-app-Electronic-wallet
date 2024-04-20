@@ -100,7 +100,7 @@ public class Signup extends AppCompatActivity {
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 if (response.isSuccessful()) {
                                     // Xử lý khi nhận được phản hồi thành công từ server
-                                    Toast.makeText(Signup.this, "Signup account successfully!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Signup.this, "Signup account successfully!", Toast.LENGTH_LONG).show();
                                 } else {
                                     // Xử lý khi nhận được phản hồi không thành công từ server
                                     String errorMessage = "";
@@ -125,7 +125,7 @@ public class Signup extends AppCompatActivity {
                         });
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(Signup.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Signup.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

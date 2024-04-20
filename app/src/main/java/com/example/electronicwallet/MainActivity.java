@@ -107,6 +107,7 @@ private void addEvent()
                                 }
                                 Toast.makeText(MainActivity.this, "Failed to signin: " + errorMessage, Toast.LENGTH_SHORT).show();
                                 Log.e("API_CALL", "Unsuccessful response: " + response.code());
+                                Log.e("API_CALL", "Unsuccessful response: " + response.message());
                             }
                         }
                         @Override
@@ -127,11 +128,8 @@ private void addEvent()
 }
     private void sendDataToNextActivity(User user) {
         if (user != null) {
-            // Tạo Intent để mở Activity mới
             Intent intent = new Intent(MainActivity.this, chat.class);
-            // Truyền chuỗi JSON qua Intent
             intent.putExtra("User", user);
-            // Khởi chạy Intent để mở Activity mới
             startActivity(intent);
         } else {
             Toast.makeText(MainActivity.this, "User object is null", Toast.LENGTH_SHORT).show();
