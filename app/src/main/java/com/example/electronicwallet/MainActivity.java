@@ -2,6 +2,7 @@ package com.example.electronicwallet;
 import com.google.gson.Gson;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,16 +21,27 @@ import com.example.electronicwallet.network.NodeJsApiService;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.models.User;
 import org.json.JSONException;
-
+import com.example.electronicwallet.controllers.locate;
 public class MainActivity extends AppCompatActivity {
     private Button btnSignin, btnTransferToSignupForm;
     private EditText edtName, edtPass;
     private NodeJsApiService apiSignin;
+    private locate locate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         apiSignin=NodeJsApiClient.getNodeJsApiService();
+        locate = new locate(this);
+        Location location = locate.getCurrentLocation();
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.d( "Latitude: ", String.valueOf(latitude));
+            Log.d( "Longittude: ", String.valueOf(longitude));
+        } else {
+            Toast.makeText(this, "Unable to get location", Toast.LENGTH_SHORT).show();
+        }
         addControl();
         addEvent();
     }
