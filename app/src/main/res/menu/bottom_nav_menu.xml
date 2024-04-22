@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_deposit"
         android:icon="@drawable/cash_icon"
-        android:title="Dashboard" />
+        android:title="Finance" />
 
     <item
         android:id="@+id/navigation_chat"
