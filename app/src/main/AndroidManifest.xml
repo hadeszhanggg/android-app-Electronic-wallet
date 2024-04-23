@@ -21,9 +21,6 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".DonateToPagoda"
-            android:exported="false" />
-        <activity
             android:name=".Pay"
             android:exported="false" />
         <activity

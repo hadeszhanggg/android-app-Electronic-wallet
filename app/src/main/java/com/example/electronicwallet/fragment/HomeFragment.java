@@ -8,10 +8,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.models.User;
+
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -19,9 +24,10 @@ import com.example.electronicwallet.models.User;
  */
 public class HomeFragment extends Fragment {
     private  User user;
-    TextView txtName, txtEmail, txtAddress, txtDateOfBirth, txtGender;
+    Button btnShow;
+    TextView txtShow, txtSoDu;
+    LinearLayout customBtnShow;
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
@@ -44,8 +50,34 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        addControl(view);
+        addEvent();
         return view;
     }
+    public void addControl(View view){
+        customBtnShow=view.findViewById(R.id.customBtnShow);
+        btnShow=customBtnShow.findViewById(R.id.btnShow);
+        txtShow=customBtnShow.findViewById(R.id.txtShow);
+        txtSoDu=view.findViewById(R.id.txtSoDu);
+    }
+  public void addEvent()
+  {
+      customBtnShow.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              if(txtShow.getText()=="Show"){
+                  btnShow.setBackgroundResource(R.drawable.eye_close);
+                  txtShow.setText("Hide");
+                  txtSoDu.setText("100.000"+" - VNĐ");
+              }else {
+                  btnShow.setBackgroundResource(R.drawable.eye_open);
+                  txtShow.setText("Show");
+                  txtSoDu.setText("***");
+              }
+
+          }
+      });
+  }
+
 
 }
