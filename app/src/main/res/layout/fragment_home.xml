@@ -61,8 +61,6 @@
             android:hint="*****"
             android:gravity="center"
             android:textSize="10pt" />
-
-        <!-- Custom Button Personal -->
         <LinearLayout
             android:id="@+id/customBtnPersonal"
             android:layout_width="50dp"
@@ -108,7 +106,7 @@
                     android:id="@+id/btnDeposit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/Deposit"/>
+                    android:src="@drawable/deposit_icon"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -148,7 +146,7 @@
                     android:id="@+id/btnVouchers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/Voucher"/>
+                    android:src="@drawable/voucher_icon"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -194,7 +192,7 @@
                     android:id="@+id/btn5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/Lottery"/>
+                    android:src="@drawable/lottery_icon"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -225,5 +223,9 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
-    
+    <TextView
+        android:id="@+id/txtUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"/>
 </LinearLayout>

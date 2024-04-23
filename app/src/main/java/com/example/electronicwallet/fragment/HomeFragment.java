@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.models.User;
 
-import org.w3c.dom.Text;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -25,8 +23,8 @@ import org.w3c.dom.Text;
 public class HomeFragment extends Fragment {
     private  User user;
     Button btnShow;
-    TextView txtShow, txtSoDu;
-    LinearLayout customBtnShow;
+    TextView txtShow, txtSoDu,txtUser;
+    LinearLayout customBtnShow,customBtnPersonal;
     public HomeFragment() {
     }
 
@@ -59,6 +57,8 @@ public class HomeFragment extends Fragment {
         btnShow=customBtnShow.findViewById(R.id.btnShow);
         txtShow=customBtnShow.findViewById(R.id.txtShow);
         txtSoDu=view.findViewById(R.id.txtSoDu);
+        txtUser=view.findViewById(R.id.txtUser);
+        customBtnPersonal=view.findViewById(R.id.customBtnPersonal);
     }
   public void addEvent()
   {
@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment {
                   btnShow.setBackgroundResource(R.drawable.eye_close);
                   txtShow.setText("Hide");
                   txtSoDu.setText("100.000"+" - VNĐ");
+                  txtUser.setText(user.getEmail());
               }else {
                   btnShow.setBackgroundResource(R.drawable.eye_open);
                   txtShow.setText("Show");
@@ -77,7 +78,11 @@ public class HomeFragment extends Fragment {
 
           }
       });
+      customBtnPersonal.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+          }
+      });
   }
-
-
 }

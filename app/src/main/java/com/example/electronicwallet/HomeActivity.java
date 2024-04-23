@@ -52,6 +52,9 @@ public class HomeActivity extends AppCompatActivity {
                     case 2:
                         bottomNavigationView.getMenu().findItem(R.id.navigation_chat).setChecked(true);
                         break;
+                    case 3:
+                        bottomNavigationView.getMenu().findItem(R.id.navigation_personal).setChecked(true);
+                        break;
                 }
             }
         });
@@ -68,6 +71,9 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 } else if (itemId == R.id.navigation_chat) {
                     viewPager.setCurrentItem(2);
+                    return true;
+                } else if (itemId == R.id.navigation_personal) {
+                    viewPager.setCurrentItem(3);
                     return true;
                 }
                 return false;
