@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Wallet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +23,7 @@ import com.example.electronicwallet.models.User;
  */
 public class HomeFragment extends Fragment {
     private  User user;
+    private Wallet wallet;
     Button btnShow;
     TextView txtShow, txtSoDu,txtUser;
     LinearLayout customBtnShow,customBtnPersonal;
@@ -29,10 +31,11 @@ public class HomeFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(User user) {
+    public static HomeFragment newInstance(User user, Wallet wallet) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putSerializable("User", user);
+        args.putSerializable("Wallet", wallet);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,6 +44,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("User");
+            wallet= (Wallet) getArguments().getSerializable("Wallet");
         }
 
     }
@@ -68,7 +72,7 @@ public class HomeFragment extends Fragment {
               if(txtShow.getText()=="Show"){
                   btnShow.setBackgroundResource(R.drawable.eye_close);
                   txtShow.setText("Hide");
-                  txtSoDu.setText("100.000"+" - VNĐ");
+                  txtSoDu.setText(wallet.getAccount_balance()+" - VNĐ");
                   txtUser.setText(user.getEmail());
               }else {
                   btnShow.setBackgroundResource(R.drawable.eye_open);

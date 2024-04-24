@@ -22,6 +22,7 @@ import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.models.User;
 import org.json.JSONException;
 import com.example.electronicwallet.controllers.locate;
+import com.example.electronicwallet.models.Wallet;
 public class MainActivity extends AppCompatActivity {
     private Button btnSignin, btnTransferToSignupForm;
     private EditText edtName, edtPass;
@@ -92,8 +93,12 @@ private void addEvent()
                                     String address = jsonResponse.getString("address");
                                     boolean gender = jsonResponse.getBoolean("gender");
                                     String dateOfBirth = jsonResponse.getString("date_of_birth");
+                                    String wallet_id  =jsonResponse.getString("wallet_id");
+                                    String prestige_score  =jsonResponse.getString("prestige_score");
+                                    String account_balance  =jsonResponse.getString("account_balance");
                                     // Lưu thông tin người dùng vào đối tượng User
                                     User user = new User();
+                                    Wallet wallet = new Wallet();
                                     user.setId(id);
                                     user.setUsername(username);
                                     user.setEmail(email);
@@ -103,8 +108,11 @@ private void addEvent()
                                     // Lưu accessToken và refreshToken vào đối tượng User
                                     user.setAccessToken(accessToken);
                                     user.setRefreshToken(refreshToken);
+                                    wallet.setId(wallet_id);
+                                    wallet.setPrestige_score(Integer.parseInt(prestige_score));
+                                    wallet.setAccount_balance(Float.parseFloat(account_balance));
                                     Toast.makeText(MainActivity.this, "Signin successfully!", Toast.LENGTH_SHORT).show();
-                                    sendDataToNextActivity(user);
+                                    sendDataToNextActivity(user,wallet);
                                 } catch (JSONException | IOException e) {
                                     e.printStackTrace();
                                 }
@@ -138,10 +146,11 @@ private void addEvent()
         }
     });
 }
-    private void sendDataToNextActivity(User user) {
+    private void sendDataToNextActivity(User user, Wallet wallet) {
         if (user != null) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.putExtra("User", user);
+            intent.putExtra("Wallet", wallet);
             startActivity(intent);
         } else {
             Toast.makeText(MainActivity.this, "User object is null", Toast.LENGTH_SHORT).show();

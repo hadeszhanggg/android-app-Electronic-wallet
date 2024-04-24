@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.electronicwallet.fragment.ViewPagerAdapter;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Wallet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.electronicwallet.models.User;
@@ -21,14 +22,16 @@ public class HomeActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
     private User user;
+    private Wallet wallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("User");
+        wallet=(Wallet) intent.getSerializableExtra("Wallet");
         addControl();
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), user);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), user, wallet);
         viewPager.setAdapter(adapter);
         addEvent();
     }

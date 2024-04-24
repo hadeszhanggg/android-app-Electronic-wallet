@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Wallet;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DepositFragment#newInstance} factory method to
@@ -18,13 +20,14 @@ import com.example.electronicwallet.models.User;
  */
 public class DepositFragment extends Fragment {
     private  User user;
-
+    private Wallet wallet;
     public DepositFragment() {
     }
-    public static DepositFragment newInstance(User user) {
+    public static DepositFragment newInstance(User user, Wallet wallet) {
         DepositFragment fragment = new DepositFragment();
         Bundle args = new Bundle();
         args.putSerializable("User", user);
+        args.putSerializable("Wallet", wallet);
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,6 +36,7 @@ public class DepositFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("User");
+            wallet= (Wallet) getArguments().getSerializable("Wallet");
         }
     }
     @Override

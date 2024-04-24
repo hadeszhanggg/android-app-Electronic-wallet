@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".fragment.PersonalFragment">
 
     <ImageView
@@ -17,6 +18,7 @@
     <TextView
         android:id="@+id/txtTenUser"
         android:gravity="center"
+        android:textColor="#ff4500"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10pt"
@@ -26,10 +28,138 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/oval_shape"
-            android:src="@drawable/logo"/>
-
+            android:id="@+id/unblockUsername"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_icon"/>
+        <EditText
+            android:id="@+id/inputUsername"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:hint="Name" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/unblockPass"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_icon"/>
+        <EditText
+            android:id="@+id/inputPassword"
+            android:enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:hint="******" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/unblockEmail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_icon"/>
+        <EditText
+            android:id="@+id/inputEmail"
+            android:enabled="false"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Email" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/unblockDateOfBirth"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_icon"/>
+        <EditText
+            android:id="@+id/inputDateOfBirth"
+            android:enabled="false"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Date of birth" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/unblockGender"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_icon"/>
+       <RadioGroup
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <RadioButton
+               android:id="@+id/rdMale"
+               android:enabled="false"
+               android:layout_marginLeft="50dp"
+               android:layout_width="90dp"
+               android:layout_height="50dp"
+               android:textColor="@color/black"
+               android:text="Male"/>
+           <ImageView
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:background="@drawable/male_icon"/>
+           <RadioButton
+               android:id="@+id/rdFemale"
+               android:enabled="false"
+               android:layout_marginLeft="10dp"
+               android:layout_width="90dp"
+               android:textColor="@color/black"
+               android:layout_height="50dp"
+               android:text="Female"/>
+           <ImageView
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:background="@drawable/female_icon"/>
+       </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/unblockAddress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/edit_icon"/>
+        <EditText
+            android:id="@+id/inputAddress"
+            android:enabled="false"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Address" />
     </LinearLayout>
 </LinearLayout>

@@ -55,6 +55,9 @@ public class User implements Serializable {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+    public boolean getGender() {
+        return this.gender;
+    }
     public String getDateOfBirth() {
         return date_of_birth;
     }
