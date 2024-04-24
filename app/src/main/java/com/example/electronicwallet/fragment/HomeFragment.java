@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import java.text.DecimalFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +26,11 @@ public class HomeFragment extends Fragment {
     private Wallet wallet;
     Button btnShow;
     TextView txtShow, txtSoDu,txtUser;
-    LinearLayout customBtnShow,customBtnPersonal;
+    DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
+    LinearLayout customBtnShow, btnDeposit, btnListBill,btnVouchers,btnInvest,btnLottery,btnNews;
     public HomeFragment() {
     }
 
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(User user, Wallet wallet) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -61,8 +61,12 @@ public class HomeFragment extends Fragment {
         btnShow=customBtnShow.findViewById(R.id.btnShow);
         txtShow=customBtnShow.findViewById(R.id.txtShow);
         txtSoDu=view.findViewById(R.id.txtSoDu);
-        txtUser=view.findViewById(R.id.txtUser);
-        customBtnPersonal=view.findViewById(R.id.customBtnPersonal);
+        btnDeposit=view.findViewById(R.id.btnDeposit);
+        btnInvest=view.findViewById(R.id.btnInvest);
+        btnListBill=view.findViewById(R.id.btnListBill);
+       btnVouchers=view.findViewById(R.id.btnVouchers);
+       btnLottery=view.findViewById(R.id.btnLottery);
+       btnNews=view.findViewById(R.id.btnNews);
     }
   public void addEvent()
   {
@@ -72,21 +76,15 @@ public class HomeFragment extends Fragment {
               if(txtShow.getText()=="Show"){
                   btnShow.setBackgroundResource(R.drawable.eye_close);
                   txtShow.setText("Hide");
-                  txtSoDu.setText(wallet.getAccount_balance()+" - VNĐ");
-                  txtUser.setText(user.getEmail());
+                  txtSoDu.setText(decimalFormat.format(wallet.getAccount_balance())+" - VNĐ");
               }else {
                   btnShow.setBackgroundResource(R.drawable.eye_open);
                   txtShow.setText("Show");
-                  txtSoDu.setText("***");
+                  txtSoDu.setText("******");
               }
 
           }
       });
-      customBtnPersonal.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
 
-          }
-      });
   }
 }

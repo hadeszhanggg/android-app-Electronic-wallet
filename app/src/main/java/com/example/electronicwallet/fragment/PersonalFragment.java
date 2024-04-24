@@ -1,5 +1,6 @@
 package com.example.electronicwallet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -10,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.electronicwallet.HomeActivity;
+import com.example.electronicwallet.MainActivity;
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
@@ -26,6 +30,7 @@ import com.example.electronicwallet.models.Wallet;
 public class PersonalFragment extends Fragment {
     protected User user;
     protected Wallet wallet;
+    LinearLayout btnBack;
     ImageView unblockUsername, unblockEmail, unblockPass, unblockGender, unblockDateOfBirth, unblockAddress;
     TextView txtName;
     RadioGroup rdGrGender;
@@ -84,6 +89,7 @@ public class PersonalFragment extends Fragment {
         rdGrGender=view.findViewById(R.id.grRdGender);
         rdMale=view.findViewById(R.id.rdMale);
         rdFemale=view.findViewById(R.id.rdFemale);
+        btnBack=view.findViewById(R.id.btnBack);
     }
     public void addEvent(){
         unblockUsername.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +149,13 @@ public class PersonalFragment extends Fragment {
                 if(inputAddress.isEnabled()==false)
                     inputAddress.setEnabled(true);
                 else inputAddress.setEnabled(false);
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
             }
         });
     }

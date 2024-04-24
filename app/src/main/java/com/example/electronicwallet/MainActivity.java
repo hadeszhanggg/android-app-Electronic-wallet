@@ -108,6 +108,7 @@ private void addEvent()
                                     // Lưu accessToken và refreshToken vào đối tượng User
                                     user.setAccessToken(accessToken);
                                     user.setRefreshToken(refreshToken);
+                                    user.setPassword(edtPass.getText().toString());
                                     wallet.setId(wallet_id);
                                     wallet.setPrestige_score(Integer.parseInt(prestige_score));
                                     wallet.setAccount_balance(Float.parseFloat(account_balance));
@@ -152,23 +153,9 @@ private void addEvent()
             intent.putExtra("User", user);
             intent.putExtra("Wallet", wallet);
             startActivity(intent);
+            finish();
         } else {
             Toast.makeText(MainActivity.this, "User object is null", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }
