@@ -1,5 +1,6 @@
 package com.example.electronicwallet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.electronicwallet.HomeActivity;
+import com.example.electronicwallet.ListBillActivity;
+import com.example.electronicwallet.MainActivity;
 import com.example.electronicwallet.R;
+import com.example.electronicwallet.Signup;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
 
@@ -85,6 +91,14 @@ public class HomeFragment extends Fragment {
 
           }
       });
-
+      btnListBill.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(getContext(), ListBillActivity.class);
+              intent.putExtra("User", user);
+              startActivity(intent);
+          }
+      });
   }
+
 }
