@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +25,8 @@ public class ListBillActivity extends AppCompatActivity {
     private User user;
     private ListView listView;
     private BillAdapter billAdapter;
+    private TextView txtNoBill;
+    LinearLayout btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +38,24 @@ public class ListBillActivity extends AppCompatActivity {
             Log.e("ERROR", "No user object passed to ListBillActivity");
             finish();
         }
-
-        listView = findViewById(R.id.listView);
+        addControl();
+        addEvent();
         nodeJsApiService = NodeJsApiClient.getNodeJsApiService();
         fetchBills();
+    }
+    private void addControl(){
+        listView = findViewById(R.id.listView);
+        txtNoBill = findViewById(R.id.txtNoBill);
+        btnBack=findViewById(R.id.btnBack);
+    }
+    private void addEvent(){
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void fetchBills() {
         String authToken = "Bearer " + user.getAccesssToken();
@@ -48,9 +66,15 @@ public class ListBillActivity extends AppCompatActivity {
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 if (response.isSuccessful()) {
                     List<Bill> bills = response.body();
-                    // Khởi tạo Adapter và gán nó cho ListView
-                    billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, bills);
-                    listView.setAdapter(billAdapter);
+                    if (bills != null && !bills.isEmpty()) {
+                        listView.setVisibility(View.VISIBLE);
+                        txtNoBill.setVisibility(View.GONE);
+                        billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, bills);
+                        listView.setAdapter(billAdapter);
+                    } else {
+                        listView.setVisibility(View.GONE);
+                        txtNoBill.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     Log.e("API_CALL", "Failed to fetch bills: " + response.message());
                 }
