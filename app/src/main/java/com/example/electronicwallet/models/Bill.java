@@ -7,17 +7,18 @@ public class Bill {
     Double total;
     Boolean paid;
     Date expiryDay, paid_date;
-
+    String type;
     public Bill() {
     }
 
-    public Bill(String id, String description, Double total, Boolean paid, Date expiryDay, Date paid_date) {
+    public Bill(String id, String description, Double total, Boolean paid, Date expiryDay, Date paid_date,String Type) {
         this.id = id;
         this.description = description;
         this.total = total;
         this.paid = paid;
         this.expiryDay = expiryDay;
         this.paid_date = paid_date;
+        this.type=Type;
     }
 
     public String getId() {
@@ -66,5 +67,13 @@ public class Bill {
 
     public void setPaid_date(Date paid_date) {
         this.paid_date = paid_date;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

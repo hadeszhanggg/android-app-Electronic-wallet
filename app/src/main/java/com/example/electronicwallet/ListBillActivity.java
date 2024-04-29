@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.electronicwallet.models.Bill;
@@ -19,8 +20,9 @@ import retrofit2.Response;
 import android.content.Intent;
 public class ListBillActivity extends AppCompatActivity {
     private NodeJsApiService nodeJsApiService;
-    TextView txtSoBill;
     private User user;
+    private ListView listView;
+    private BillAdapter billAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +34,12 @@ public class ListBillActivity extends AppCompatActivity {
             Log.e("ERROR", "No user object passed to ListBillActivity");
             finish();
         }
+
+        listView = findViewById(R.id.listView);
         nodeJsApiService = NodeJsApiClient.getNodeJsApiService();
         fetchBills();
     }
     private void fetchBills() {
-        // Lấy authToken từ SharedPreferences hoặc từ nơi bạn lưu trữ thông tin đăng nhập
         String authToken = "Bearer " + user.getAccesssToken();
 
         Call<List<Bill>> call = nodeJsApiService.getAllBills(authToken);
@@ -45,7 +48,9 @@ public class ListBillActivity extends AppCompatActivity {
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 if (response.isSuccessful()) {
                     List<Bill> bills = response.body();
-                    Log.d("API_CALL", "So luong bill trong danh sach: "+bills.size());
+                    // Khởi tạo Adapter và gán nó cho ListView
+                    billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, bills);
+                    listView.setAdapter(billAdapter);
                 } else {
                     Log.e("API_CALL", "Failed to fetch bills: " + response.message());
                 }
