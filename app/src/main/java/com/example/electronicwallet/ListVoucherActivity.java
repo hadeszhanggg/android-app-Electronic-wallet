@@ -2,6 +2,7 @@ package com.example.electronicwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.electronicwallet.models.Bill;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Voucher;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.network.NodeJsApiService;
 
@@ -23,22 +25,20 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import android.content.Intent;
-public class ListBillActivity extends AppCompatActivity {
+
+public class ListVoucherActivity extends AppCompatActivity {
     private NodeJsApiService nodeJsApiService;
     private User user;
     private ListView listView;
-    private BillAdapter billAdapter;
-    private TextView txtNoBill;
+    private VoucherAdapter voucherAdapter;
+    private TextView txtNoVoucher;
     LinearLayout btnBack;
     private Spinner spinnerType;
-    private List<Bill> allBills;
-
+    private List<Voucher> allVouchers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_bill);
-
+        setContentView(R.layout.activity_list_voucher);
         Intent intent = getIntent();
         if (intent.hasExtra("User")) {
             user = (User) intent.getSerializableExtra("User");
@@ -52,10 +52,9 @@ public class ListBillActivity extends AppCompatActivity {
         nodeJsApiService = NodeJsApiClient.getNodeJsApiService();
         fetchBills();
     }
-
     private void addControl() {
         listView = findViewById(R.id.listView);
-        txtNoBill = findViewById(R.id.txtNoBill);
+        txtNoVoucher = findViewById(R.id.txtNoVoucher);
         spinnerType = findViewById(R.id.spinnerType);
         btnBack=findViewById(R.id.btnBack);
     }
@@ -84,24 +83,22 @@ public class ListBillActivity extends AppCompatActivity {
     private void fetchBills() {
         String authToken = "Bearer " + user.getAccesssToken();
 
-        Call<List<Bill>> call = nodeJsApiService.getAllBills(authToken);
-        call.enqueue(new Callback<List<Bill>>() {
+        Call<List<Voucher>> call = nodeJsApiService.getAllVouchers(authToken);
+        call.enqueue(new Callback<List<Voucher>>() {
             @Override
-            public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
+            public void onResponse(Call<List<Voucher>> call, Response<List<Voucher>> response) {
                 if (response.isSuccessful()) {
-                    List<Bill> bills = response.body();
-                    allBills = bills; // Lưu trữ danh sách hóa đơn gốc
-                    if (bills != null && !bills.isEmpty()) {
+                    List<Voucher> vouchers = response.body();
+                    allVouchers = vouchers;
+                    if (vouchers != null && !vouchers.isEmpty()) {
                         listView.setVisibility(View.VISIBLE);
-                        txtNoBill.setVisibility(View.GONE);
-                        billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, bills);
-                        listView.setAdapter(billAdapter);
-
-                        // Cập nhật dữ liệu cho Combobox
-                        updateSpinnerData(bills);
+                        txtNoVoucher.setVisibility(View.GONE);
+                        voucherAdapter = new VoucherAdapter(ListVoucherActivity.this, R.layout.item_voucher, vouchers);
+                        listView.setAdapter(voucherAdapter);
+                        updateSpinnerData(vouchers);
                     } else {
                         listView.setVisibility(View.GONE);
-                        txtNoBill.setVisibility(View.VISIBLE);
+                        txtNoVoucher.setVisibility(View.VISIBLE);
                     }
                 } else {
                     Log.e("API_CALL", "Failed to fetch bills: " + response.message());
@@ -109,18 +106,18 @@ public class ListBillActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Bill>> call, Throwable t) {
+            public void onFailure(Call<List<Voucher>> call, Throwable t) {
                 Log.e("API_CALL", "Failed to fetch bills: " + t.getMessage());
             }
         });
     }
 
-    private void updateSpinnerData(List<Bill> bills) {
+    private void updateSpinnerData(List<Voucher> vouchers) {
         List<String> types = new ArrayList<>();
         types.add("All");
-        for (Bill bill : bills) {
-            if (!types.contains(bill.getType())) {
-                types.add(bill.getType());
+        for (Voucher voucher : vouchers) {
+            if (!types.contains(voucher.getType())) {
+                types.add(voucher.getType());
             }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
@@ -129,19 +126,19 @@ public class ListBillActivity extends AppCompatActivity {
     }
 
     private void filterBillsByType(String type) {
-        List<Bill> filteredBills = new ArrayList<>();
+        List<Voucher> filteredVouchers = new ArrayList<>();
         //đặt allBills thành danh sách tất cả bill, xét type để set lại adapter
         if ("All".equals(type)) {
-            filteredBills = allBills;
+            filteredVouchers = allVouchers;
         } else {
-            for (Bill bill : allBills) {
-                if (bill.getType().equals(type)) {
-                    filteredBills.add(bill);
+            for (Voucher voucher : allVouchers) {
+                if (voucher.getType().equals(type)) {
+                    filteredVouchers.add(voucher);
                 }
             }
         }
         // Cập nhật lại ListView với danh sách hóa đơn đã lọc
-        billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, filteredBills);
-        listView.setAdapter(billAdapter);
+        voucherAdapter = new VoucherAdapter(ListVoucherActivity.this, R.layout.item_voucher, filteredVouchers);
+        listView.setAdapter(voucherAdapter);
     }
 }

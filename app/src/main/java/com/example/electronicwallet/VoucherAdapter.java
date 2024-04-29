@@ -1,0 +1,54 @@
+package com.example.electronicwallet;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.electronicwallet.models.Bill;
+import com.example.electronicwallet.models.Voucher;
+
+import java.util.List;
+
+public class VoucherAdapter extends ArrayAdapter<Voucher> {
+    private Context context;
+    private int resource;
+    private List<Voucher> vouchers;
+
+    public VoucherAdapter(Context context, int resource, List<Voucher> vouchers) {
+        super(context, resource, vouchers);
+        this.context = context;
+        this.resource = resource;
+        this.vouchers = vouchers;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View listItemView = convertView;
+        if (listItemView == null) {
+            listItemView = LayoutInflater.from(context).inflate(resource, parent, false);
+        }
+
+        Voucher currentVoucher = vouchers.get(position);
+        //Gan cac view
+        ImageView imageVoucher = listItemView.findViewById(R.id.imageVoucher);
+        TextView textDescription = listItemView.findViewById(R.id.textDescription);
+        TextView textDiscount = listItemView.findViewById(R.id.textDiscount);
+        TextView textType = listItemView.findViewById(R.id.textType);
+        if ("deposit".equals(currentVoucher.getType())) {
+            imageVoucher.setImageResource(R.drawable.deposit_icon_voucher);
+        } else if ("pay".equals(currentVoucher.getType())) {
+            imageVoucher.setImageResource(R.drawable.pay_cash);
+        } else {
+            imageVoucher.setImageResource(R.drawable.pay_visa);
+        }
+        textDescription.setText(currentVoucher.getDescription());
+        textDiscount.setText(String.valueOf(currentVoucher.getDiscount()));
+        textType.setText(String.valueOf(currentVoucher.getType()));
+        return listItemView;
+    }
+}
+

@@ -1,5 +1,6 @@
 package com.example.electronicwallet.network;
 
+import com.example.electronicwallet.models.Voucher;
 import com.google.gson.JsonObject;
 
 import okhttp3.RequestBody;
@@ -21,4 +22,6 @@ public interface NodeJsApiService {
     Call<ResponseBody> signin(@Body RequestBody requestBody);
     @GET("users/getAllBills")
     Call<List<Bill>> getAllBills(@Header("Authorization") String authToken);
+    @GET("users/getAllVouchers")
+    Call<List<Voucher>> getAllVouchers(@Header("Authorization") String authToken);
 }

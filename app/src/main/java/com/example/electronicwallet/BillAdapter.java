@@ -37,6 +37,7 @@ public class BillAdapter extends ArrayAdapter<Bill> {
         ImageView imageBill = listItemView.findViewById(R.id.imageBill);
         TextView textDescription = listItemView.findViewById(R.id.textDescription);
         TextView textTotal = listItemView.findViewById(R.id.textTotal);
+        TextView textType = listItemView.findViewById(R.id.textType);
         if ("electric".equals(currentBill.getType())) {
             imageBill.setImageResource(R.drawable.electric_icon);
         } else if ("water".equals(currentBill.getType())) {
@@ -46,7 +47,7 @@ public class BillAdapter extends ArrayAdapter<Bill> {
         }
         textDescription.setText(currentBill.getDescription());
         textTotal.setText(String.valueOf(currentBill.getTotal()));
-
+        textType.setText(String.valueOf(currentBill.getType()));
         return listItemView;
     }
 }

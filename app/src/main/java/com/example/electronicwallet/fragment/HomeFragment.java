@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.electronicwallet.HomeActivity;
 import com.example.electronicwallet.ListBillActivity;
+import com.example.electronicwallet.ListVoucherActivity;
 import com.example.electronicwallet.MainActivity;
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.Signup;
@@ -95,6 +96,14 @@ public class HomeFragment extends Fragment {
           @Override
           public void onClick(View v) {
               Intent intent = new Intent(getContext(), ListBillActivity.class);
+              intent.putExtra("User", user);
+              startActivity(intent);
+          }
+      });
+      btnVouchers.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(getContext(), ListVoucherActivity.class);
               intent.putExtra("User", user);
               startActivity(intent);
           }

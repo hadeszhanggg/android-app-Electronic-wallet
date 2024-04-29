@@ -51,6 +51,8 @@
             android:layout_width="100dp"
             android:gravity="center"
             android:layout_height="60dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20dp"
             android:text="Username:" />
 
@@ -74,6 +76,8 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:text="Email:" />
     <EditText
         android:id="@+id/edtEmail"
@@ -95,6 +99,8 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:text="Address:" />
         <Spinner
             android:id="@+id/spinnerProvince"
@@ -112,10 +118,12 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="100dp"
+            android:layout_height="65dp"
             android:gravity="center"
-            android:layout_height="60dp"
+            android:text="Date of birth:"
+            android:textColor="@color/black"
             android:textSize="20dp"
-            android:text="Date of birth:" />
+            android:textStyle="bold" />
     <EditText
         android:id="@+id/edtDofB"
         android:layout_width="match_parent"
@@ -136,6 +144,8 @@
             android:gravity="center"
             android:layout_height="60dp"
             android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:text="Gender:" />
     <RadioGroup
         android:id="@+id/grRdGender"
@@ -148,15 +158,19 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="male"
-            android:textSize="20dp"></RadioButton>
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
 
         <RadioButton
             android:id="@+id/rdFemale"
             android:layout_width="200dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_height="match_parent"
             android:layout_marginLeft="80dp"
             android:text="female"
-            android:textSize="20dp"></RadioButton>
+            android:textSize="20dp"/>
     </RadioGroup>
     </LinearLayout>
     <LinearLayout
@@ -169,7 +183,10 @@
             android:id="@+id/textView6"
             android:layout_width="100dp"
             android:gravity="center"
+
             android:layout_height="60dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20dp"
             android:text="Password:" />
     <EditText
@@ -191,6 +208,8 @@
             android:layout_width="100dp"
             android:gravity="center"
             android:layout_height="60dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20dp"
             android:text="Confirm password:" />
     <EditText
