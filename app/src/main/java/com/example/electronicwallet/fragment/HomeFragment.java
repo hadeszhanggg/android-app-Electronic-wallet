@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.electronicwallet.DepositActivity;
 import com.example.electronicwallet.HomeActivity;
+import com.example.electronicwallet.InvestActivity;
 import com.example.electronicwallet.ListBillActivity;
 import com.example.electronicwallet.ListVoucherActivity;
 import com.example.electronicwallet.MainActivity;
@@ -108,6 +110,21 @@ public class HomeFragment extends Fragment {
               startActivity(intent);
           }
       });
+      btnDeposit.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(getContext(), DepositActivity.class);
+              intent.putExtra("User", user);
+              startActivity(intent);
+          }
+      });
+      btnInvest.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(getContext(), InvestActivity.class);
+              intent.putExtra("User", user);
+              startActivity(intent);
+          }
+      });
   }
-
 }

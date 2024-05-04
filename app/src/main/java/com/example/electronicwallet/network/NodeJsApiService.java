@@ -1,5 +1,6 @@
 package com.example.electronicwallet.network;
 
+import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.Voucher;
 import com.google.gson.JsonObject;
 
@@ -24,4 +25,6 @@ public interface NodeJsApiService {
     Call<List<Bill>> getAllBills(@Header("Authorization") String authToken);
     @GET("users/getAllVouchers")
     Call<List<Voucher>> getAllVouchers(@Header("Authorization") String authToken);
+    @GET("users/getAllPassbook")
+    Call<List<Passbook>> getAllPassbook();
 }

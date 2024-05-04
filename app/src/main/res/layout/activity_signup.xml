@@ -224,6 +224,7 @@
         android:id="@+id/btnSignup"
         android:layout_width="100dp"
         android:layout_height="60dp"
+        android:textStyle="bold"
         android:layout_marginLeft="150dp"
         android:backgroundTint="#dc143c"
         android:text="Create account" />

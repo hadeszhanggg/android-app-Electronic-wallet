@@ -50,12 +50,9 @@ public class HomeActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
                         break;
                     case 1:
-                        bottomNavigationView.getMenu().findItem(R.id.navigation_deposit).setChecked(true);
-                        break;
-                    case 2:
                         bottomNavigationView.getMenu().findItem(R.id.navigation_chat).setChecked(true);
                         break;
-                    case 3:
+                    case 2:
                         bottomNavigationView.getMenu().findItem(R.id.navigation_personal).setChecked(true);
                         break;
                 }
@@ -69,14 +66,11 @@ public class HomeActivity extends AppCompatActivity {
                 if (itemId == R.id.navigation_home) {
                     viewPager.setCurrentItem(0);
                     return true;
-                } else if (itemId == R.id.navigation_deposit) {
+                }else if (itemId == R.id.navigation_chat) {
                     viewPager.setCurrentItem(1);
                     return true;
-                } else if (itemId == R.id.navigation_chat) {
-                    viewPager.setCurrentItem(2);
-                    return true;
                 } else if (itemId == R.id.navigation_personal) {
-                    viewPager.setCurrentItem(3);
+                    viewPager.setCurrentItem(2);
                     return true;
                 }
                 return false;

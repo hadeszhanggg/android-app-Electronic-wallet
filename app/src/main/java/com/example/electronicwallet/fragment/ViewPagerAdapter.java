@@ -31,10 +31,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return HomeFragment.newInstance(user, wallet);
             case 1:
-                return DepositFragment.newInstance(user,wallet);
-            case 2:
                 return ChatFragment.newInstance(user);
-            case 3:
+            case 2:
                 return PersonalFragment.newInstance(user,wallet);
             default:
                 return HomeFragment.newInstance(user,wallet);
@@ -43,6 +41,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 }
