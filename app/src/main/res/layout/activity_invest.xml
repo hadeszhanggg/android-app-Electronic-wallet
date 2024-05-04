@@ -10,12 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#dc143c"
         android:orientation="horizontal">
         <LinearLayout
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="@color/white"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="40dp"
@@ -36,27 +38,24 @@
             <ImageView
                 android:id="@+id/imgLogo"
                 android:layout_width="100dp"
-                android:layout_height="60dp"
+                android:layout_height="100dp"
                 android:background="@drawable/oval_shape"
                 android:src="@drawable/logo"
                 android:gravity="center" />
-            <TextView
-                android:gravity="center"
-                android:textColor="#ff4500"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Deposit passbook"
-                android:textSize="7pt"
-                />
+
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <GridView
         android:id="@+id/passbookGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="2"
         android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:padding="10dp"/>
-
+        android:horizontalSpacing="10dp"/>
+    </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.electronicwallet.models;
 
-public class Passbook {
+import java.io.Serializable;
+
+public class Passbook implements Serializable {
     private int id;
     private String passbook_name;
     private String description;

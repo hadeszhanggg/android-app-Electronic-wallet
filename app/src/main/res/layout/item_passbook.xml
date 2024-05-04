@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
+    android:layout_width="160dp"
+    android:layout_height="100dp"
     android:orientation="horizontal"
     android:padding="16dp">
     <ImageView
         android:id="@+id/passbookImageView"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:orientation="vertical">
     <TextView
         android:id="@+id/passbookNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textSize="12dp"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
+        android:text="passbook name"/>
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="10dp"
+        android:text="description"
         android:layout_marginTop="4dp"/>
     <TextView
         android:id="@+id/interestRateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textColor="#dc143c"
+        android:textSize="10dp"
+        android:textStyle="italic"
+        android:text="Interest rate"
         android:layout_marginTop="4dp"/>
 
     <TextView
         android:id="@+id/periodTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textColor="#dc143c"
+        android:textStyle="italic"
+        android:textSize="10dp"
+        android:text="period"
         android:layout_marginTop="4dp"/>
-
+    </LinearLayout>
 </LinearLayout>
