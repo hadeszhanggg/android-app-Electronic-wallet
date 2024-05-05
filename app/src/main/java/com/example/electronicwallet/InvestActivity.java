@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
@@ -15,20 +16,22 @@ import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.network.NodeJsApiService;
-
+import androidx.fragment.app.FragmentManager;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.GET;
 
 public class InvestActivity extends AppCompatActivity {
-    LinearLayout btnBack;
+    LinearLayout btnBack,layoutHeader;
     private NodeJsApiService nodeJsApiService;
     private PassbookAdapter passbookAdapter;
     private GridView passbookGridView;
     List<Passbook> passbooks;
+    private View contentView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +44,14 @@ public class InvestActivity extends AppCompatActivity {
     protected void addControl(){
         passbookGridView = findViewById(R.id.passbookGridView);
         btnBack=findViewById(R.id.btnBack);
+        layoutHeader=findViewById(R.id.layoutHeader);
+        contentView = findViewById(android.R.id.content);
     }
     protected void addEvent(){
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
         passbookGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,26 +62,31 @@ public class InvestActivity extends AppCompatActivity {
             }
         });
     }
-    //Show fragment function
     private void showPassbookDetailFragment(Passbook passbook) {
-        RegisterPassbookFragment fragment = new RegisterPassbookFragment();
-        fragment.setPassbook(passbook);
-
+        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        transaction.replace(R.id.layoutContainer, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.add(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .commit();
+        if (contentView != null) {
+            contentView.setAlpha(0.7f);
+        }
     }
 
-
+    public void onFragmentClosed() {
+        // Set lại độ trong suốt của các view
+        if (contentView != null) {
+            contentView.setAlpha(1.0f);
+        }
+    }
     private void fetchPassbooks() {
         Call<List<Passbook>> call = nodeJsApiService.getAllPassbook();
         call.enqueue(new Callback<List<Passbook>>() {
             @Override
             public void onResponse(Call<List<Passbook>> call, Response<List<Passbook>> response) {
                 if (response.isSuccessful()) {
-                     passbooks = response.body();
+                    passbooks = response.body();
                     if (passbooks != null && !passbooks.isEmpty()) {
                         passbookAdapter = new PassbookAdapter(InvestActivity.this, R.layout.item_passbook, passbooks);
                         passbookGridView.setAdapter(passbookAdapter);

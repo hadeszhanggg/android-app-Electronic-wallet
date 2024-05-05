@@ -146,6 +146,7 @@ public class Signup extends AppCompatActivity {
             public void onClick(View v) {
                 Intent it = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(it);
+                finish();
                 // Quick Notification
                 Toast.makeText(getApplicationContext(), "Close signup form", Toast.LENGTH_SHORT).show();
             }

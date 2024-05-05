@@ -75,9 +75,7 @@ public class ListBillActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -91,13 +89,12 @@ public class ListBillActivity extends AppCompatActivity {
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 if (response.isSuccessful()) {
                     List<Bill> bills = response.body();
-                    allBills = bills; // Lưu trữ danh sách hóa đơn gốc
+                    allBills = bills;
                     if (bills != null && !bills.isEmpty()) {
                         listView.setVisibility(View.VISIBLE);
                         txtNoBill.setVisibility(View.GONE);
                         billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, bills);
                         listView.setAdapter(billAdapter);
-
                         // Cập nhật dữ liệu cho Combobox
                         updateSpinnerData(bills);
                     } else {
