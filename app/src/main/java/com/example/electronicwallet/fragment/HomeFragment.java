@@ -99,6 +99,7 @@ public class HomeFragment extends Fragment {
           public void onClick(View v) {
               Intent intent = new Intent(getContext(), ListBillActivity.class);
               intent.putExtra("User", user);
+              intent.putExtra("Wallet", wallet);
               startActivity(intent);
           }
       });

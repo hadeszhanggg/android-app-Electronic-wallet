@@ -1,6 +1,7 @@
 package com.example.electronicwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,12 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.electronicwallet.fragment.PayFragment;
+import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Bill;
+import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Wallet;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.network.NodeJsApiService;
 
@@ -30,10 +35,10 @@ public class ListBillActivity extends AppCompatActivity {
     private ListView listView;
     private BillAdapter billAdapter;
     private TextView txtNoBill;
-    LinearLayout btnBack;
+    LinearLayout btnBack,layoutAc;
     private Spinner spinnerType;
     private List<Bill> allBills;
-
+private Wallet wallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,7 @@ public class ListBillActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("User")) {
             user = (User) intent.getSerializableExtra("User");
+            wallet = (Wallet) intent.getSerializableExtra("Wallet");
         } else {
             Log.e("ERROR", "No user object passed to ListBillActivity");
             finish();
@@ -58,6 +64,7 @@ public class ListBillActivity extends AppCompatActivity {
         txtNoBill = findViewById(R.id.txtNoBill);
         spinnerType = findViewById(R.id.spinnerType);
         btnBack=findViewById(R.id.btnBack);
+        layoutAc= findViewById(R.id.layoutAc);
     }
 
     private void addEvent() {
@@ -78,8 +85,27 @@ public class ListBillActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bill selectedBill = allBills.get(position);
+                showBillDetailFragment(selectedBill, user, wallet);
+            }
+        });
+    }
+    private void showBillDetailFragment(Bill bill, User user, Wallet wallet) {
+        PayFragment fragment = PayFragment.newInstance(bill, user, wallet);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        transaction.add(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .commit();
+       layoutAc.setAlpha(0.7f);
     }
 
+    public void onFragmentClosed() {
+        layoutAc.setAlpha(1.0f);
+    }
     private void fetchBills() {
         String authToken = "Bearer " + user.getAccesssToken();
 

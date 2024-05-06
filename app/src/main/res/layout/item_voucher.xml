@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#87cefa"
+        android:layout_height="100dp"
+        android:background="@color/white"
         android:layout_marginTop="10pt"
         android:orientation="horizontal">
         <ImageView
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="8pt"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="italic"
                 android:text="Description" />
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:textSize="8pt"
                     android:gravity="center"
                     android:textStyle="italic"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:text="Total" />
             </LinearLayout>
         </LinearLayout>

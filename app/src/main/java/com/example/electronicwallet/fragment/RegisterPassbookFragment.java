@@ -195,8 +195,6 @@
                 descriptionTextView.setText(passbook.getDescription());
                 interestRateTextView.setText(String.valueOf(passbook.getInterest_rate()));
                 periodTextView.setText(String.valueOf(passbook.getPeriod()));
-                btnClose.setBackgroundResource(R.drawable.close_icon);
-                btnRegister.setBackgroundResource(R.drawable.pay_cash);
             }
         }
     }

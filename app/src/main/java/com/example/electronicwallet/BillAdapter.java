@@ -38,16 +38,18 @@ public class BillAdapter extends ArrayAdapter<Bill> {
         TextView textDescription = listItemView.findViewById(R.id.textDescription);
         TextView textTotal = listItemView.findViewById(R.id.textTotal);
         TextView textType = listItemView.findViewById(R.id.textType);
+        TextView exp = listItemView.findViewById(R.id.txtExp);
         if ("electric".equals(currentBill.getType())) {
-            imageBill.setImageResource(R.drawable.electric_icon);
+            imageBill.setImageResource(R.drawable.electronic_bill);
         } else if ("water".equals(currentBill.getType())) {
-            imageBill.setImageResource(R.drawable.water_icon);
+            imageBill.setImageResource(R.drawable.water_bill);
         } else {
-            imageBill.setImageResource(R.drawable.wifi_router_icon);
+            imageBill.setImageResource(R.drawable.telecom_bill);
         }
         textDescription.setText(currentBill.getDescription());
         textTotal.setText(String.valueOf(currentBill.getTotal()));
         textType.setText(String.valueOf(currentBill.getType()));
+        exp.setText(String.valueOf(currentBill.getExpiryDay()));
         return listItemView;
     }
 }

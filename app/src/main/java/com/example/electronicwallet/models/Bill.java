@@ -1,24 +1,25 @@
 package com.example.electronicwallet.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Bill {
+public class Bill implements Serializable {
     String id, description;
     Double total;
     Boolean paid;
-    Date expiryDay, paid_date;
+    Date expiryDays, paid_date;
     String type;
     public Bill() {
     }
 
-    public Bill(String id, String description, Double total, Boolean paid, Date expiryDay, Date paid_date,String Type) {
+    public Bill(String id, String description, Double total, Boolean paid, Date expiryDays, Date paid_date,String Type) {
         this.id = id;
         this.description = description;
         this.total = total;
-        this.paid = paid;
-        this.expiryDay = expiryDay;
-        this.paid_date = paid_date;
         this.type=Type;
+        this.paid = paid;
+        this.expiryDays = expiryDays;
+        this.paid_date = paid_date;
     }
 
     public String getId() {
@@ -54,11 +55,11 @@ public class Bill {
     }
 
     public Date getExpiryDay() {
-        return expiryDay;
+        return expiryDays;
     }
 
     public void setExpiryDay(Date expiryDay) {
-        this.expiryDay = expiryDay;
+        this.expiryDays = expiryDay;
     }
 
     public Date getPaid_date() {
