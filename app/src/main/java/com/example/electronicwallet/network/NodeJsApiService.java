@@ -27,4 +27,6 @@ public interface NodeJsApiService {
     Call<List<Voucher>> getAllVouchers(@Header("Authorization") String authToken);
     @GET("users/getAllPassbook")
     Call<List<Passbook>> getAllPassbook();
+    @POST("/users/passbookRegistration")
+    Call<ResponseBody> RegisterPassbook(@Body RequestBody requestBody,@Header("Authorization") String authToken);
 }

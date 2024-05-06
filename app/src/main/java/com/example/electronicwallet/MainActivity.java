@@ -118,7 +118,6 @@ private void addEvent()
                                     e.printStackTrace();
                                 }
                             } else {
-                                // Xử lý khi nhận được phản hồi không thành công từ server
                                 String errorMessage = "";
                                 try {
                                     JSONObject errorBody = new JSONObject(response.errorBody().string());

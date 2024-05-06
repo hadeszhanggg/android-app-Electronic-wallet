@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Passbook;
+import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.network.NodeJsApiService;
 import androidx.fragment.app.FragmentManager;
@@ -32,10 +33,18 @@ public class InvestActivity extends AppCompatActivity {
     private GridView passbookGridView;
     List<Passbook> passbooks;
     private View contentView;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invest);
+        Intent intent = getIntent();
+        if (intent.hasExtra("User")) {
+            user = (User) intent.getSerializableExtra("User");
+            Log.d("ERROR", user.getAccesssToken());
+        } else {
+            finish();
+        }
         addControl();
         nodeJsApiService = NodeJsApiClient.getNodeJsApiService();
         fetchPassbooks();
@@ -58,27 +67,25 @@ public class InvestActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Passbook selectedPassbook = passbooks.get(position);
-                showPassbookDetailFragment(selectedPassbook);
+                showPassbookDetailFragment(selectedPassbook, user);
             }
         });
     }
-    private void showPassbookDetailFragment(Passbook passbook) {
-        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook);
+    private void showPassbookDetailFragment(Passbook passbook, User user) {
+        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook, user);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         transaction.add(android.R.id.content, fragment)
                 .addToBackStack(null)
                 .commit();
-        if (contentView != null) {
-            contentView.setAlpha(0.7f);
-        }
+        findViewById(R.id.layoutHeader).setAlpha(0.7f);
+        findViewById(R.id.passbookGridView).setAlpha(0.7f);
     }
 
     public void onFragmentClosed() {
         // Set lại độ trong suốt của các view
-        if (contentView != null) {
-            contentView.setAlpha(1.0f);
-        }
+        findViewById(R.id.layoutHeader).setAlpha(1.0f);
+        findViewById(R.id.passbookGridView).setAlpha(1.0f);
     }
     private void fetchPassbooks() {
         Call<List<Passbook>> call = nodeJsApiService.getAllPassbook();
