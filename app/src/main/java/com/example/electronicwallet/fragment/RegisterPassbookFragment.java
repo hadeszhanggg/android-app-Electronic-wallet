@@ -22,6 +22,7 @@
     import com.example.electronicwallet.R;
     import com.example.electronicwallet.models.Passbook;
     import com.example.electronicwallet.models.User;
+    import com.example.electronicwallet.models.Wallet;
     import com.example.electronicwallet.network.NodeJsApiClient;
 
     import org.json.JSONException;
@@ -47,21 +48,24 @@
         private Button btnRegister, btnClose;
         private Passbook passbook;
         private User user;
+        private Wallet wallet;
         public RegisterPassbookFragment() {
         }
 
-        public static RegisterPassbookFragment newInstance(Passbook passbook, User user) {
+        public static RegisterPassbookFragment newInstance(Passbook passbook, User user, Wallet wallet) {
             RegisterPassbookFragment fragment = new RegisterPassbookFragment();
             Bundle args = new Bundle();
             args.putSerializable("passbook", passbook);
             args.putSerializable("user", user);
+            args.putSerializable("wallet", wallet);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public void setPassbook(Passbook passbook, User user) {
+        public void setPassbook(Passbook passbook, User user, Wallet wallet) {
             this.passbook = passbook;
             this.user = user;
+            this.wallet=wallet;
         }
 
         @Override
@@ -70,6 +74,7 @@
             if (getArguments() != null) {
                 passbook = (Passbook) getArguments().getSerializable("passbook");
                 user = (User) getArguments().getSerializable("user");
+                wallet = (Wallet) getArguments().getSerializable("wallet");
             }
         }
 
@@ -155,6 +160,7 @@
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(getContext(), "Register passbook successfully!", Toast.LENGTH_LONG).show();
+                        wallet.setAccount_balance((Float) wallet.getAccount_balance()-Float.parseFloat(amount_deposit));
                         closeFragment();
                     }
                     else {

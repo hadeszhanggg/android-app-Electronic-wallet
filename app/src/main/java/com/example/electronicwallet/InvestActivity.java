@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Wallet;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.network.NodeJsApiService;
 import androidx.fragment.app.FragmentManager;
@@ -34,6 +35,7 @@ public class InvestActivity extends AppCompatActivity {
     List<Passbook> passbooks;
     private View contentView;
     private User user;
+    private Wallet wallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class InvestActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("User")) {
             user = (User) intent.getSerializableExtra("User");
-            Log.d("ERROR", user.getAccesssToken());
+            wallet = (Wallet) intent.getSerializableExtra("Wallet");
         } else {
             finish();
         }
@@ -67,12 +69,12 @@ public class InvestActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Passbook selectedPassbook = passbooks.get(position);
-                showPassbookDetailFragment(selectedPassbook, user);
+                showPassbookDetailFragment(selectedPassbook, user, wallet);
             }
         });
     }
-    private void showPassbookDetailFragment(Passbook passbook, User user) {
-        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook, user);
+    private void showPassbookDetailFragment(Passbook passbook, User user, Wallet wallet) {
+        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook, user, wallet);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         transaction.add(android.R.id.content, fragment)
