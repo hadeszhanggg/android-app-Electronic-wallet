@@ -111,7 +111,7 @@ private void addEvent()
                                     user.setPassword(edtPass.getText().toString());
                                     wallet.setId(wallet_id);
                                     wallet.setPrestige_score(Integer.parseInt(prestige_score));
-                                    wallet.setAccount_balance(Float.parseFloat(account_balance));
+                                    wallet.setAccount_balance(Double.parseDouble(account_balance));
                                     Toast.makeText(MainActivity.this, "Signin successfully!", Toast.LENGTH_SHORT).show();
                                     sendDataToNextActivity(user,wallet);
                                 } catch (JSONException | IOException e) {

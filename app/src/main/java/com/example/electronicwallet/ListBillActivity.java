@@ -168,4 +168,9 @@ private Wallet wallet;
         billAdapter = new BillAdapter(ListBillActivity.this, R.layout.item_bill, filteredBills);
         listView.setAdapter(billAdapter);
     }
+    // Phương thức để xóa bill khỏi danh sách
+    public void removeBillFromList(Bill billToRemove) {
+        allBills.remove(billToRemove);
+        billAdapter.notifyDataSetChanged();
+    }
 }

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.electronicwallet.InvestActivity;
 import com.example.electronicwallet.ListBillActivity;
@@ -23,6 +24,19 @@ import com.example.electronicwallet.models.Bill;
 import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
+import com.example.electronicwallet.network.NodeJsApiClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,14 +81,12 @@ public class PayFragment extends Fragment {
         btnClose = view.findViewById(R.id.btnClose);
     }
     protected void addEvent(){
-        // Xử lý sự kiện khi nút đóng fragment được click
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeFragment();
             }
         });
-        // Xử lý sự kiện khi nút đăng ký được click
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,16 +103,55 @@ public class PayFragment extends Fragment {
     private void showDialogConfirmation() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Confirmation");
-        builder.setMessage("Are you sure you want to register this passbook?");
+        builder.setMessage("Are you sure you want to pay this bill?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                payTheBill();
             }
         });
         builder.setNegativeButton("No", null);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+    private void payTheBill() {
+        String authToken = "Bearer " + user.getAccesssToken();
+        // Tạo JSONObject chứa dữ liệu cần gửi đi
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("billId", bill.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        // Gọi API RegisterPassbook
+        Call<ResponseBody> call = NodeJsApiClient.getNodeJsApiService().payBill(RequestBody.create(MediaType.parse("application/json"), requestBody.toString()), authToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Pay this bill successfully!", Toast.LENGTH_LONG).show();
+                    wallet.setAccount_balance( wallet.getAccount_balance()-bill.getTotal());
+                    Log.d("API_CALL","Acount balance: "+ wallet.getAccount_balance().toString() );
+                    ((ListBillActivity) getActivity()).removeBillFromList(bill);
+                    closeFragment();
+                }
+                else {
+                    String errorMessage = "";
+                    try {
+                        JSONObject errorBody = new JSONObject(response.errorBody().string());
+                        errorMessage = errorBody.getString("message");
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getContext(), "Pay this bill FAILED!", Toast.LENGTH_LONG).show();
+                    Log.e("API_CALL", "Unsuccessful response: " + response.code());
+                    Log.e("API_CALL", "Unsuccessful response: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Register passbook", "Failed when pay this bill!: " + t.getMessage());                }
+        });
     }
     private void populateBillData() {
         if (bill != null) {
@@ -112,7 +163,6 @@ public class PayFragment extends Fragment {
             expiryDaysTextView.setText(bill.getExpiryDay().toString());
             descriptionTextView.setText(bill.getDescription());
             totalTextView.setText(String.valueOf(bill.getTotal()));
-            btnClose.setBackgroundResource(R.drawable.close_icon);
         }
     }
     @Override

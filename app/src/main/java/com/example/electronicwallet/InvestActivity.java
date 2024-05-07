@@ -13,12 +13,15 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.example.electronicwallet.fragment.RegisterPassbookFragment;
+import com.example.electronicwallet.models.DataModel;
 import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
 import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.network.NodeJsApiService;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ import retrofit2.Response;
 import retrofit2.http.GET;
 
 public class InvestActivity extends AppCompatActivity {
+    private DataModel dataViewModel;
     LinearLayout btnBack,layoutHeader;
     private NodeJsApiService nodeJsApiService;
     private PassbookAdapter passbookAdapter;
@@ -41,12 +45,7 @@ public class InvestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invest);
         Intent intent = getIntent();
-        if (intent.hasExtra("User")) {
-            user = (User) intent.getSerializableExtra("User");
-            wallet = (Wallet) intent.getSerializableExtra("Wallet");
-        } else {
-            finish();
-        }
+        dataViewModel = new ViewModelProvider(this).get(DataModel.class);
         addControl();
         nodeJsApiService = NodeJsApiClient.getNodeJsApiService();
         fetchPassbooks();
@@ -69,12 +68,12 @@ public class InvestActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Passbook selectedPassbook = passbooks.get(position);
-                showPassbookDetailFragment(selectedPassbook, user, wallet);
+                showPassbookDetailFragment(selectedPassbook);
             }
         });
     }
-    private void showPassbookDetailFragment(Passbook passbook, User user, Wallet wallet) {
-        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook, user, wallet);
+    private void showPassbookDetailFragment(Passbook passbook) {
+        RegisterPassbookFragment fragment = RegisterPassbookFragment.newInstance(passbook);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         transaction.add(android.R.id.content, fragment)

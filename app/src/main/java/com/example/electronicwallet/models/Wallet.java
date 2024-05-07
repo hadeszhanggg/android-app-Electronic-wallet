@@ -5,9 +5,9 @@ import java.io.Serializable;
 public class Wallet implements Serializable {
     protected String id;
     protected int prestige_score;
-    protected float account_balance;
+    protected Double account_balance;
 
-    public Wallet(String id, int prestige_score, float account_balance) {
+    public Wallet(String id, int prestige_score, Double account_balance) {
         this.id = id;
         this.prestige_score = prestige_score;
         this.account_balance = account_balance;
@@ -32,11 +32,11 @@ public class Wallet implements Serializable {
         this.prestige_score = prestige_score;
     }
 
-    public float getAccount_balance() {
+    public Double getAccount_balance() {
         return account_balance;
     }
 
-    public void setAccount_balance(float account_balance) {
+    public void setAccount_balance(Double account_balance) {
         this.account_balance = account_balance;
     }
 }

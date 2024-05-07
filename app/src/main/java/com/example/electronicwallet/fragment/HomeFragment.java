@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import java.text.DecimalFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.example.electronicwallet.ListVoucherActivity;
 import com.example.electronicwallet.MainActivity;
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.Signup;
+import com.example.electronicwallet.models.DataModel;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
 
@@ -31,6 +34,7 @@ import com.example.electronicwallet.models.Wallet;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    private DataModel dataViewModel;
     private  User user;
     private Wallet wallet;
     Button btnShow;
@@ -40,22 +44,13 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
     }
 
-    public static HomeFragment newInstance(User user, Wallet wallet) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("User", user);
-        args.putSerializable("Wallet", wallet);
-        fragment.setArguments(args);
-        return fragment;
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            user = (User) getArguments().getSerializable("User");
-            wallet= (Wallet) getArguments().getSerializable("Wallet");
-        }
-
+        dataViewModel = new ViewModelProvider(requireActivity()).get(DataModel.class);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +58,17 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         addControl(view);
         addEvent();
+        observeViewModel();
         return view;
+    }
+    private void observeViewModel() {
+        dataViewModel.getUser().observe(getViewLifecycleOwner(), user -> {
+
+        });
+
+        dataViewModel.getWallet().observe(getViewLifecycleOwner(), wallet -> {
+
+        });
     }
     public void addControl(View view){
         customBtnShow=view.findViewById(R.id.customBtnShow);
@@ -82,16 +87,15 @@ public class HomeFragment extends Fragment {
       customBtnShow.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              if(txtShow.getText()=="Show"){
+              if (txtShow.getText() == "Show") {
                   btnShow.setBackgroundResource(R.drawable.eye_close);
                   txtShow.setText("Hide");
-                  txtSoDu.setText(decimalFormat.format(wallet.getAccount_balance())+" - VNĐ");
-              }else {
+                  txtSoDu.setText(decimalFormat.format(dataViewModel.getWallet().getValue().getAccount_balance()) + " - VNĐ");
+              } else {
                   btnShow.setBackgroundResource(R.drawable.eye_open);
                   txtShow.setText("Show");
                   txtSoDu.setText("******");
               }
-
           }
       });
       btnListBill.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +127,6 @@ public class HomeFragment extends Fragment {
           @Override
           public void onClick(View v) {
               Intent intent = new Intent(getContext(), InvestActivity.class);
-              intent.putExtra("User", user);
-              intent.putExtra("Wallet", wallet);
               startActivity(intent);
           }
       });

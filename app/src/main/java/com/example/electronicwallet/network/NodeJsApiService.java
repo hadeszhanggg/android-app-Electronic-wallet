@@ -21,7 +21,9 @@ public interface NodeJsApiService {
     Call<ResponseBody> signup(@Body RequestBody requestBody);
     @POST("auth/signin")
     Call<ResponseBody> signin(@Body RequestBody requestBody);
-    @GET("users/getAllBills")
+    @GET("users/getWallet")
+    Call<ResponseBody> getWallet(@Header("Authorization") String authToken);
+    @GET("users/getUnpaidBills")
     Call<List<Bill>> getAllBills(@Header("Authorization") String authToken);
     @GET("users/getAllVouchers")
     Call<List<Voucher>> getAllVouchers(@Header("Authorization") String authToken);
@@ -29,4 +31,6 @@ public interface NodeJsApiService {
     Call<List<Passbook>> getAllPassbook();
     @POST("/users/passbookRegistration")
     Call<ResponseBody> RegisterPassbook(@Body RequestBody requestBody,@Header("Authorization") String authToken);
+    @POST("/users/payBill")
+    Call<ResponseBody> payBill(@Body RequestBody requestBody,@Header("Authorization") String authToken);
 }
