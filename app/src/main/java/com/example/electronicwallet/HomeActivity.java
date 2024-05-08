@@ -3,42 +3,41 @@ package com.example.electronicwallet;
 import static androidx.fragment.app.FragmentStatePagerAdapter.*;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.electronicwallet.fragment.ViewPagerAdapter;
-import com.example.electronicwallet.models.DataModel;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.electronicwallet.models.User;
 
+import java.io.Serializable;
+
 public class HomeActivity extends AppCompatActivity {
+    private  static  final int MY_REQUEST_CODE=12;
     private ViewPager2 viewPager;
     private BottomNavigationView bottomNavigationView;
     private User user;
     private Wallet wallet;
-    private DataModel dataViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        dataViewModel = new ViewModelProvider(this).get(DataModel.class);
-
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra("User");
-        Wallet wallet = (Wallet) intent.getSerializableExtra("Wallet");
-        dataViewModel.setUser(user);
-        dataViewModel.setWallet(wallet);
+        user = (User) intent.getSerializableExtra("User");
+        wallet=(Wallet) intent.getSerializableExtra("Wallet");
         addControl();
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), dataViewModel);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), user, wallet);
         viewPager.setAdapter(adapter);
         addEvent();
     }

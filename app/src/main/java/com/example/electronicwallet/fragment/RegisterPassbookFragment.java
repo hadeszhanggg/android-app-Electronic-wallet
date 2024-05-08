@@ -5,8 +5,6 @@
         import android.os.Bundle;
 
         import androidx.fragment.app.Fragment;
-        import androidx.lifecycle.LiveData;
-        import androidx.lifecycle.ViewModelProvider;
 
         import android.text.InputType;
         import android.util.Log;
@@ -19,10 +17,9 @@
         import android.widget.TextView;
         import android.widget.Toast;
 
+        import com.example.electronicwallet.Interface.PassbookRegisteredListener;
         import com.example.electronicwallet.InvestActivity;
-        import com.example.electronicwallet.MainActivity;
         import com.example.electronicwallet.R;
-        import com.example.electronicwallet.models.DataModel;
         import com.example.electronicwallet.models.Passbook;
         import com.example.electronicwallet.models.User;
         import com.example.electronicwallet.models.Wallet;
@@ -46,7 +43,7 @@
          * create an instance of this fragment.
          */
         public class RegisterPassbookFragment extends Fragment {
-            private DataModel dataViewModel;
+            private static PassbookRegisteredListener listener;
             private ImageView passbookImageView;
             private TextView passbookNameTextView, descriptionTextView, interestRateTextView, periodTextView;
             private Button btnRegister, btnClose;
@@ -56,30 +53,33 @@
             public RegisterPassbookFragment() {
             }
 
-            public static RegisterPassbookFragment newInstance(Passbook passbook) {
+            public static RegisterPassbookFragment newInstance(Passbook passbook, User user, Wallet wallet, PassbookRegisteredListener passbookRegisteredListener) {
+                listener = passbookRegisteredListener;
                 RegisterPassbookFragment fragment = new RegisterPassbookFragment();
                 Bundle args = new Bundle();
                 args.putSerializable("passbook", passbook);
+                args.putSerializable("user", user);
+                args.putSerializable("wallet", wallet);
                 fragment.setArguments(args);
                 return fragment;
             }
-
             public void setPassbook() {
             }
 
             @Override
             public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
+                if (getArguments() != null) {
+                    passbook = (Passbook) getArguments().getSerializable("passbook");
+                    user = (User) getArguments().getSerializable("user");
+                    wallet = (Wallet) getArguments().getSerializable("wallet");
+                }
             }
 
             @Override
             public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                      Bundle savedInstanceState) {
                 View view = inflater.inflate(R.layout.fragment_register_passbook, container, false);
-                dataViewModel = new ViewModelProvider(requireActivity()).get(DataModel.class);
-                user = dataViewModel.getUser().getValue();
-                wallet = dataViewModel.getWallet().getValue();
-                Log.d("Register passbook", "Data: "+user.getEmail()+"Wallet: "+wallet.getPrestige_score());
                 initView(view);
                 populatePassbookData();
                 addEvent();
@@ -158,7 +158,7 @@
                         if (response.isSuccessful()) {
                             Toast.makeText(getContext(), "Register passbook successfully!", Toast.LENGTH_LONG).show();
                             wallet.setAccount_balance(wallet.getAccount_balance()-Float.parseFloat(amount_deposit));
-                            dataViewModel.setWallet(wallet);
+                            listener.passbookRegistered(wallet);
                             closeFragment();
                         }
                         else {
