@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.electronicwallet.Interface.PassbookRegisteredListener;
 import com.example.electronicwallet.fragment.RegisterPassbookFragment;
@@ -28,6 +29,7 @@ import retrofit2.Response;
 
 public class InvestActivity extends AppCompatActivity implements PassbookRegisteredListener {
     LinearLayout btnBack,layoutHeader;
+    RelativeLayout layoutIn;
     private NodeJsApiService nodeJsApiService;
     private PassbookAdapter passbookAdapter;
     private GridView passbookGridView;
@@ -57,6 +59,7 @@ public class InvestActivity extends AppCompatActivity implements PassbookRegiste
         btnBack=findViewById(R.id.btnBack);
         layoutHeader=findViewById(R.id.layoutHeader);
         contentView = findViewById(android.R.id.content);
+        layoutIn=findViewById(R.id.layoutIn);
     }
     protected void addEvent(){
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -83,12 +86,10 @@ public class InvestActivity extends AppCompatActivity implements PassbookRegiste
         transaction.add(android.R.id.content, fragment)
                 .addToBackStack(null)
                 .commit();
-        findViewById(R.id.layoutHeader).setAlpha(0.7f);
-        findViewById(R.id.passbookGridView).setAlpha(0.7f);
+        layoutIn.setAlpha(0.7f);
     }
     public void onFragmentClosed() {
-        findViewById(R.id.layoutHeader).setAlpha(1.0f);
-        findViewById(R.id.passbookGridView).setAlpha(1.0f);
+        layoutIn.setAlpha(1.0f);
     }
     private void fetchPassbooks() {
         Call<List<Passbook>> call = nodeJsApiService.getAllPassbook();

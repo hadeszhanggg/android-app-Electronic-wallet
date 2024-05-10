@@ -43,9 +43,9 @@ public class BillAdapter extends ArrayAdapter<Bill> {
             imageBill.setImageResource(R.drawable.electronic_bill);
         } else if ("water".equals(currentBill.getType())) {
             imageBill.setImageResource(R.drawable.water_bill);
-        } else {
+        } else if ("telecom".equals(currentBill.getType())) {
             imageBill.setImageResource(R.drawable.telecom_bill);
-        }
+        }else imageBill.setImageResource(R.drawable.bill_wifi);
         textDescription.setText(currentBill.getDescription());
         textTotal.setText(String.valueOf(currentBill.getTotal()));
         textType.setText(String.valueOf(currentBill.getType()));

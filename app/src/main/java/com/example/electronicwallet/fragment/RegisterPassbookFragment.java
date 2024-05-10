@@ -182,13 +182,13 @@
             private void populatePassbookData() {
                 if (passbook != null) {
                     if (passbook.getPassbook_name().equals("Tài lộc đầy nhà"))
-                        passbookImageView.setImageResource(R.drawable.tuitien_icon);
+                        passbookImageView.setImageResource(R.drawable.tailocdaynha);
                     else if (passbook.getPassbook_name().equals("Heo đỏ tài lộc"))
-                        passbookImageView.setImageResource(R.drawable.heodo_icon);
+                        passbookImageView.setImageResource(R.drawable.heovangtailoc);
                     else if (passbook.getPassbook_name().equals("Heo vàng tài lộc"))
-                        passbookImageView.setImageResource(R.drawable.heovang_icon);
+                        passbookImageView.setImageResource(R.drawable.heovangtailoc);
                     else
-                        passbookImageView.setImageResource(R.drawable.latien_icon);
+                        passbookImageView.setImageResource(R.drawable.cayvangtailoc);
                     passbookNameTextView.setText(passbook.getPassbook_name());
                     descriptionTextView.setText(passbook.getDescription());
                     interestRateTextView.setText(String.valueOf(passbook.getInterest_rate()));

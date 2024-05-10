@@ -38,13 +38,14 @@ public class VoucherAdapter extends ArrayAdapter<Voucher> {
         TextView textDescription = listItemView.findViewById(R.id.textDescription);
         TextView textDiscount = listItemView.findViewById(R.id.textDiscount);
         TextView textType = listItemView.findViewById(R.id.textType);
-        if ("deposit".equals(currentVoucher.getType())) {
-            imageVoucher.setImageResource(R.drawable.deposit_icon_voucher);
-        } else if ("pay".equals(currentVoucher.getType())) {
-            imageVoucher.setImageResource(R.drawable.pay_cash);
-        } else {
-            imageVoucher.setImageResource(R.drawable.pay_visa);
-        }
+        if ("electric".equals(currentVoucher.getType())) {
+            imageVoucher.setImageResource(R.drawable.voucher_electric);
+        } else if ("water".equals(currentVoucher.getType())) {
+            imageVoucher.setImageResource(R.drawable.voucher_water);
+        } else if ("telecom".equals(currentVoucher.getType())) {
+            imageVoucher.setImageResource(R.drawable.voucher_telecom);
+        }else
+                imageVoucher.setImageResource(R.drawable.voucher_wifi);
         textDescription.setText(currentVoucher.getDescription());
         textDiscount.setText(String.valueOf(currentVoucher.getDiscount()));
         textType.setText(String.valueOf(currentVoucher.getType()));

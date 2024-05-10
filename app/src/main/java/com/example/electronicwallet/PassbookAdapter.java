@@ -34,25 +34,26 @@ public class PassbookAdapter extends ArrayAdapter<Passbook> {
         Passbook currentPassbook = passbooks.get(position);
 
         TextView passbookNameTextView = listItemView.findViewById(R.id.passbookNameTextView);
-        TextView descriptionTextView = listItemView.findViewById(R.id.descriptionTextView);
         TextView interestRateTextView = listItemView.findViewById(R.id.interestRateTextView);
         TextView periodTextView = listItemView.findViewById(R.id.periodTextView);
         ImageView passbookImageView = listItemView.findViewById(R.id.passbookImageView);
 
         passbookNameTextView.setText(currentPassbook.getPassbook_name());
-        descriptionTextView.setText(currentPassbook.getDescription());
-        interestRateTextView.setText(String.valueOf(currentPassbook.getInterest_rate()));
-        periodTextView.setText(String.valueOf(currentPassbook.getPeriod()));
+        // Chuyển đổi từ số thập phân sang phần trăm
+        double interestRatePercent = currentPassbook.getInterest_rate() * 100;
+        // Sử dụng định dạng phần trăm để hiển thị
+        interestRateTextView.setText(String.format("%.2f%%", interestRatePercent));
+        periodTextView.setText(String.valueOf(currentPassbook.getPeriod()+" Tháng"));
         String passbookName = currentPassbook.getPassbook_name();
         if (passbookName != null) {
             if (passbookName.equals("Tài lộc đầy nhà"))
-                passbookImageView.setImageResource(R.drawable.tuitien_icon);
+                passbookImageView.setImageResource(R.drawable.tailocdaynha);
             else if (passbookName.equals("Heo đỏ tài lộc"))
-                passbookImageView.setImageResource(R.drawable.heodo_icon);
+                passbookImageView.setImageResource(R.drawable.heodotailoc);
             else if (passbookName.equals("Heo vàng tài lộc"))
-                passbookImageView.setImageResource(R.drawable.heovang_icon);
+                passbookImageView.setImageResource(R.drawable.heovangtailoc);
             else
-                passbookImageView.setImageResource(R.drawable.latien_icon);
+                passbookImageView.setImageResource(R.drawable.cayvangtailoc);
         }
 
         return listItemView;

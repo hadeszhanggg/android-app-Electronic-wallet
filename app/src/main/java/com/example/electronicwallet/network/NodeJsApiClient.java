@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.concurrent.TimeUnit;
 import com.example.electronicwallet.network.Constants;
 public class NodeJsApiClient {
-    private static final String BASE_URL = "http://192.168.11.16:333/";
+    private static final String BASE_URL = "https://nt.hadeszhang.tech/";
     private static final int CONNECT_TIMEOUT_SECONDS = 30;
     private static final int READ_TIMEOUT_SECONDS = 30;
     private static final int WRITE_TIMEOUT_SECONDS = 30;
