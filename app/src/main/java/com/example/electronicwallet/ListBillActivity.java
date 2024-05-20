@@ -29,7 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.content.Intent;
-public class ListBillActivity extends AppCompatActivity {
+import com.example.electronicwallet.Interface.PassbookRegisteredListener;
+public class ListBillActivity extends AppCompatActivity implements PassbookRegisteredListener{
     private NodeJsApiService nodeJsApiService;
     private User user;
     private ListView listView;
@@ -93,8 +94,12 @@ private Wallet wallet;
             }
         });
     }
+    @Override
+    public void passbookRegistered(Wallet updatedWallet) {
+        this.wallet = updatedWallet;
+    }
     private void showBillDetailFragment(Bill bill, User user, Wallet wallet) {
-        PayFragment fragment = PayFragment.newInstance(bill, user, wallet);
+        PayFragment fragment = PayFragment.newInstance(bill, user, wallet,this);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         transaction.add(android.R.id.content, fragment)

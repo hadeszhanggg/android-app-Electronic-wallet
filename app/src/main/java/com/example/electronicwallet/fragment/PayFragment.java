@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.electronicwallet.Interface.PassbookRegisteredListener;
 import com.example.electronicwallet.InvestActivity;
 import com.example.electronicwallet.ListBillActivity;
 import com.example.electronicwallet.R;
@@ -37,13 +38,14 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+import com.example.electronicwallet.Interface.PassbookRegisteredListener;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PayFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class PayFragment extends Fragment {
+    private static PassbookRegisteredListener listener;
     private ImageView BillImageView;
     private TextView expiryDaysTextView, descriptionTextView, totalTextView;
     private Button btnPay, btnClose;
@@ -53,7 +55,8 @@ public class PayFragment extends Fragment {
     public PayFragment() {
 
     }
-    public static PayFragment newInstance(Bill bill,User user, Wallet wallet) {
+    public static PayFragment newInstance(Bill bill,User user, Wallet wallet, PassbookRegisteredListener passbookRegisteredListener) {
+        listener = passbookRegisteredListener;
         PayFragment fragment = new PayFragment();
         Bundle args = new Bundle();
         args.putSerializable("bill", bill);
@@ -130,7 +133,8 @@ public class PayFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getContext(), "Pay this bill successfully!", Toast.LENGTH_LONG).show();
-                    wallet.setAccount_balance( wallet.getAccount_balance()-bill.getTotal());
+                    wallet.setAccount_balance(wallet.getAccount_balance()-bill.getTotal());
+                    listener.passbookRegistered(wallet);
                     Log.d("API_CALL","Acount balance: "+ wallet.getAccount_balance().toString() );
                     ((ListBillActivity) getActivity()).removeBillFromList(bill);
                     closeFragment();

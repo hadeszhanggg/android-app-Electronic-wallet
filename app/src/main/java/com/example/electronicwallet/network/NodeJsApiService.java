@@ -1,6 +1,7 @@
 package com.example.electronicwallet.network;
 
 import com.example.electronicwallet.models.Passbook;
+import com.example.electronicwallet.models.Transaction;
 import com.example.electronicwallet.models.Voucher;
 import com.google.gson.JsonObject;
 
@@ -33,4 +34,8 @@ public interface NodeJsApiService {
     Call<ResponseBody> RegisterPassbook(@Body RequestBody requestBody,@Header("Authorization") String authToken);
     @POST("/users/payBill")
     Call<ResponseBody> payBill(@Body RequestBody requestBody,@Header("Authorization") String authToken);
+    @POST("/users/transferMoney")
+    Call<ResponseBody> transferMoney(@Body RequestBody requestBody,@Header("Authorization") String authToken);
+    @GET("/users/getAllTransactions")
+    Call<List<Transaction>> getTransactions(@Header("Authorization") String authToken);
 }

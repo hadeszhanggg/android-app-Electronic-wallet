@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:id="@+id/layoutIn"
-    tools:context=".InvestActivity">
+    tools:context=".TransactionActivity">
     <LinearLayout
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
@@ -46,13 +46,33 @@
 
         </LinearLayout>
     </LinearLayout>
-    <GridView
-        android:id="@+id/passbookGridView"
+    <LinearLayout
+        android:id="@+id/layoutFilter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/layoutHeader"
-        android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp" />
-
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@+id/layoutHeader"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/filter_icon"/>
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <TextView
+        android:layout_below="@+id/layoutFilter"
+        android:layout_marginTop="10pt"
+        android:id="@+id/txtNoBill"
+        android:layout_width="wrap_content"
+        android:textSize="10pt"
+        android:text="Empty"
+        android:layout_height="wrap_content"/>
+    <ListView
+        android:layout_below="@+id/layoutFilter"
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

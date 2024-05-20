@@ -24,6 +24,7 @@
     import com.example.electronicwallet.ListBillActivity;
     import com.example.electronicwallet.ListVoucherActivity;
     import com.example.electronicwallet.R;
+    import com.example.electronicwallet.TransactionActivity;
     import com.example.electronicwallet.models.User;
     import com.example.electronicwallet.models.Wallet;
 
@@ -39,7 +40,7 @@
         Button btnShow;
         TextView txtShow, txtSoDu,txtUser;
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
-        LinearLayout customBtnShow, btnDeposit, btnListBill,btnVouchers,btnInvest,btnLottery,btnNews;
+        LinearLayout customBtnShow, btnDeposit, btnListBill,btnVouchers,btnInvest,btnTransactions,btnTransfer;
         public HomeFragment() {
         }
 
@@ -77,8 +78,8 @@
             btnInvest=view.findViewById(R.id.btnInvest);
             btnListBill=view.findViewById(R.id.btnListBill);
            btnVouchers=view.findViewById(R.id.btnVouchers);
-           btnLottery=view.findViewById(R.id.btnLottery);
-           btnNews=view.findViewById(R.id.btnNews);
+            btnTransactions=view.findViewById(R.id.btnTransactions);
+            btnTransfer=view.findViewById(R.id.btnTransfer);
         }
       public void addEvent()
       {
@@ -102,7 +103,7 @@
                   Intent intent = new Intent(getContext(), ListBillActivity.class);
                   intent.putExtra("User", user);
                   intent.putExtra("Wallet", wallet);
-                  startActivity(intent);
+                  startActivityForResult(intent, MY_REQUEST_CODE);
               }
           });
           btnVouchers.setOnClickListener(new View.OnClickListener() {
@@ -128,9 +129,17 @@
                   intent.putExtra("User", user);
                   intent.putExtra("Wallet", wallet);
                   startActivityForResult(intent, MY_REQUEST_CODE);
-
               }
           });
+            btnTransactions.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), TransactionActivity.class);
+                    intent.putExtra("User", user);
+                    intent.putExtra("Wallet", wallet);
+                    startActivityForResult(intent, MY_REQUEST_CODE);
+                }
+            });
       }
         @Override
         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

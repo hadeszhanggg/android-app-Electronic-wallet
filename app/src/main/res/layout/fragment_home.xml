@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/banner"
+    android:background="@color/white"
     tools:context=".fragment.HomeFragment">
     <ImageView
         android:layout_gravity="center"
@@ -158,37 +158,37 @@
             <LinearLayout
                 android:layout_width="120dp"
                 android:layout_height="80dp"
-                android:id="@+id/btnLottery"
+                android:id="@+id/btnTransactions"
                 android:layout_centerHorizontal="true"
                 android:background="@color/white"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/lottery_icon"/>
+                    android:src="@drawable/transaction_list"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Lottery"
+                    android:text="Transactions"
                     android:textSize="10pt"
                     android:textColor="@color/black"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="120dp"
                 android:layout_height="80dp"
-                android:id="@+id/btnNews"
+                android:id="@+id/btnTransfer"
                 android:background="@color/white"
                 android:layout_alignParentRight="true"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/paper_icon"/>
+                    android:src="@drawable/transfer_money"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="News"
+                    android:text="Transfer"
                     android:gravity="center"
                     android:textSize="10pt"
                     android:textColor="@color/black"/>
