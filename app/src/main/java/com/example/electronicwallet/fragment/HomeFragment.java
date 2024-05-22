@@ -25,6 +25,7 @@
     import com.example.electronicwallet.ListVoucherActivity;
     import com.example.electronicwallet.R;
     import com.example.electronicwallet.TransactionActivity;
+    import com.example.electronicwallet.TransferActivity;
     import com.example.electronicwallet.models.User;
     import com.example.electronicwallet.models.Wallet;
 
@@ -140,6 +141,15 @@
                     startActivityForResult(intent, MY_REQUEST_CODE);
                 }
             });
+          btnTransfer.setOnClickListener(new View.OnClickListener(){
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(getContext(), TransferActivity.class);
+                  intent.putExtra("User", user);
+                  intent.putExtra("Wallet", wallet);
+                  startActivityForResult(intent, MY_REQUEST_CODE);
+              }
+          });
       }
         @Override
         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
