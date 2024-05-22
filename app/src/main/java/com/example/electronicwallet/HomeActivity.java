@@ -20,6 +20,7 @@ import com.example.electronicwallet.models.Wallet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.electronicwallet.models.User;
+import com.google.firebase.FirebaseApp;
 
 import java.io.Serializable;
 
@@ -37,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         user = (User) intent.getSerializableExtra("User");
         wallet=(Wallet) intent.getSerializableExtra("Wallet");
         addControl();
+        FirebaseApp.initializeApp(this);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getLifecycle(), user, wallet);
         viewPager.setAdapter(adapter);
         addEvent();

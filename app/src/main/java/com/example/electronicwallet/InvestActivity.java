@@ -13,7 +13,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.example.electronicwallet.Interface.PassbookRegisteredListener;
+import com.example.electronicwallet.Interface.DataShared;
 import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InvestActivity extends AppCompatActivity implements PassbookRegisteredListener {
+public class InvestActivity extends AppCompatActivity implements DataShared {
     LinearLayout btnBack,layoutHeader;
     RelativeLayout layoutIn;
     private NodeJsApiService nodeJsApiService;
@@ -50,7 +50,7 @@ public class InvestActivity extends AppCompatActivity implements PassbookRegiste
         addEvent();
     }
     @Override
-    public void passbookRegistered(Wallet updatedWallet) {
+    public void dataShared(Wallet updatedWallet) {
         this.wallet = updatedWallet;
     }
 

@@ -1,4 +1,5 @@
 package com.example.electronicwallet;
+import com.google.firebase.FirebaseApp;
 import com.google.gson.Gson;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -60,7 +61,6 @@ private void addEvent()
         public void onClick(View v) {
             Intent it = new Intent(getApplicationContext(), Signup.class);
             startActivity(it);
-            // Quick Notification
             Toast.makeText(getApplicationContext(), "Close signin form", Toast.LENGTH_SHORT).show();
         }
     });
@@ -91,6 +91,7 @@ private void addEvent()
                                     String username = jsonResponse.getString("username");
                                     String email = jsonResponse.getString("email");
                                     String address = jsonResponse.getString("address");
+                                    String avatar  =jsonResponse.getString("avatar");
                                     boolean gender = jsonResponse.getBoolean("gender");
                                     String dateOfBirth = jsonResponse.getString("date_of_birth");
                                     String wallet_id  =jsonResponse.getString("wallet_id");
@@ -105,6 +106,7 @@ private void addEvent()
                                     user.setAddress(address);
                                     user.setGender(gender);
                                     user.setDateOfBirth(dateOfBirth);
+                                    user.setAvatar(avatar);
                                     // Lưu accessToken và refreshToken vào đối tượng User
                                     user.setAccessToken(accessToken);
                                     user.setRefreshToken(refreshToken);

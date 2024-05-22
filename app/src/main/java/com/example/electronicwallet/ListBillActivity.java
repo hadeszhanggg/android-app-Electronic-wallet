@@ -14,9 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.electronicwallet.fragment.PayFragment;
-import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Bill;
-import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
 import com.example.electronicwallet.network.NodeJsApiClient;
@@ -29,8 +27,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.content.Intent;
-import com.example.electronicwallet.Interface.PassbookRegisteredListener;
-public class ListBillActivity extends AppCompatActivity implements PassbookRegisteredListener{
+import com.example.electronicwallet.Interface.DataShared;
+public class ListBillActivity extends AppCompatActivity implements DataShared {
     private NodeJsApiService nodeJsApiService;
     private User user;
     private ListView listView;
@@ -95,7 +93,7 @@ private Wallet wallet;
         });
     }
     @Override
-    public void passbookRegistered(Wallet updatedWallet) {
+    public void dataShared(Wallet updatedWallet) {
         this.wallet = updatedWallet;
     }
     private void showBillDetailFragment(Bill bill, User user, Wallet wallet) {

@@ -7,19 +7,20 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String email;
-    private String address;
+    private String address, avatar;
     private boolean gender;
     private String date_of_birth;
     private String accesssToken;
     private String refreshToken;
     public User() {
     }
-    public User(String id, String username, String password, String email, String address, boolean gender, String date_of_birth, String  accesssToken, String refreshToken) {
+    public User(String id, String username, String password, String email, String address,String avatar, boolean gender, String date_of_birth, String  accesssToken, String refreshToken) {
         this.id =id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.address = address;
+        this.avatar = avatar;
         this.gender = gender;
         this.date_of_birth = date_of_birth;
         this.accesssToken = accesssToken;
@@ -73,6 +74,23 @@ public class User implements Serializable {
     public String getRefreshToken() {
         return refreshToken;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDate_of_birth() {
+        return date_of_birth;
+    }
+
+    public void setDate_of_birth(String date_of_birth) {
+        this.date_of_birth = date_of_birth;
+    }
+
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

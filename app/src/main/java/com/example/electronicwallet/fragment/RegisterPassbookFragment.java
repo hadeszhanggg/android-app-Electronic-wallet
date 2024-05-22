@@ -17,7 +17,7 @@
         import android.widget.TextView;
         import android.widget.Toast;
 
-        import com.example.electronicwallet.Interface.PassbookRegisteredListener;
+        import com.example.electronicwallet.Interface.DataShared;
         import com.example.electronicwallet.InvestActivity;
         import com.example.electronicwallet.R;
         import com.example.electronicwallet.models.Passbook;
@@ -43,7 +43,7 @@
          * create an instance of this fragment.
          */
         public class RegisterPassbookFragment extends Fragment {
-            private static PassbookRegisteredListener listener;
+            private static DataShared listener;
             private ImageView passbookImageView;
             private TextView passbookNameTextView, descriptionTextView, interestRateTextView, periodTextView;
             private Button btnRegister, btnClose;
@@ -53,7 +53,7 @@
             public RegisterPassbookFragment() {
             }
 
-            public static RegisterPassbookFragment newInstance(Passbook passbook, User user, Wallet wallet, PassbookRegisteredListener passbookRegisteredListener) {
+            public static RegisterPassbookFragment newInstance(Passbook passbook, User user, Wallet wallet, DataShared passbookRegisteredListener) {
                 listener = passbookRegisteredListener;
                 RegisterPassbookFragment fragment = new RegisterPassbookFragment();
                 Bundle args = new Bundle();
@@ -158,7 +158,7 @@
                         if (response.isSuccessful()) {
                             Toast.makeText(getContext(), "Register passbook successfully!", Toast.LENGTH_LONG).show();
                             wallet.setAccount_balance(wallet.getAccount_balance()-Float.parseFloat(amount_deposit));
-                            listener.passbookRegistered(wallet);
+                            listener.dataShared(wallet);
                             closeFragment();
                         }
                         else {

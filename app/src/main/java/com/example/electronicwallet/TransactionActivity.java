@@ -49,11 +49,10 @@ public class TransactionActivity extends AppCompatActivity {
             Log.e("ERROR", "No user object passed to ListBillActivity");
             finish();
         }
-
-        addControl();
-        addEvent();
         nodeJsApiService = NodeJsApiClient.getNodeJsApiService();
         fetchTrans();
+        addControl();
+        addEvent();
     }
 
     private void addControl() {
@@ -77,6 +76,17 @@ public class TransactionActivity extends AppCompatActivity {
                 //showBillDetailFragment(selectedBill, user, wallet);
             }
         });
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+               String selectedType = spinnerType.getSelectedItem().toString();
+               filterTransactionsByType(selectedType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
     private void fetchTrans() {
         String authToken = "Bearer " + user.getAccesssToken();
@@ -93,7 +103,6 @@ public class TransactionActivity extends AppCompatActivity {
                         txtNoTrans.setVisibility(View.GONE);
                         tranAdapter = new TransactionAdapter(TransactionActivity.this, R.layout.item_transaction, transactions);
                         listView.setAdapter(tranAdapter);
-                        Log.d("toiday", "toiday: "+transactions.size());
                         // Cập nhật dữ liệu cho Combobox
                         updateSpinnerData(transactions);
                     } else {
@@ -143,7 +152,7 @@ public class TransactionActivity extends AppCompatActivity {
             }
         }
         // Cập nhật lại ListView với danh sách hóa đơn đã lọc
-        tranAdapter = new TransactionAdapter(TransactionActivity.this, R.layout.item_bill, filteredTransaction);
+        tranAdapter = new TransactionAdapter(TransactionActivity.this, R.layout.item_transaction, filteredTransaction);
         listView.setAdapter(tranAdapter);
     }
 }
