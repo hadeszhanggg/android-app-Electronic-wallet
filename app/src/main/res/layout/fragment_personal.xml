@@ -6,49 +6,49 @@
     android:orientation="vertical"
     android:background="@color/white"
     tools:context=".fragment.PersonalFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    android:orientation="horizontal">
     <LinearLayout
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/back_icon"/>
-        <TextView
+
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back"
-            android:textSize="10pt"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="100dp"
-        android:orientation="vertical">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgLogo"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/back_icon"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:textSize="10pt"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:background="@drawable/oval_shape"
-            android:src="@drawable/logo"
-            android:gravity="center" />
-        <TextView
-            android:id="@+id/txtTenUser"
-            android:gravity="center"
-            android:textColor="#ff4500"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10pt"
-            />
+            android:layout_height="100dp"
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:background="@drawable/oval_shape"
+                android:src="@drawable/logo"
+                android:gravity="center" />
+            <TextView
+                android:id="@+id/txtTenUser"
+                android:gravity="center"
+                android:textColor="#ff4500"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -169,37 +169,37 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/edit_icon"/>
-       <RadioGroup
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <RadioButton
-               android:id="@+id/rdMale"
-               android:enabled="false"
-               android:layout_marginLeft="10dp"
-               android:layout_width="wrap_content"
-               android:layout_height="60dp"
-               android:textSize="10pt"
-               android:textColor="@color/black"
-               android:text="Male"/>
-           <ImageView
-               android:layout_width="60dp"
-               android:layout_height="60dp"
-               android:background="@drawable/male_icon"/>
-           <RadioButton
-               android:id="@+id/rdFemale"
-               android:enabled="false"
-               android:layout_marginLeft="10dp"
-               android:layout_width="wrap_content"
-               android:textSize="10pt"
-               android:textColor="@color/black"
-               android:layout_height="60dp"
-               android:text="Female"/>
-           <ImageView
-               android:layout_width="60dp"
-               android:layout_height="60dp"
-               android:background="@drawable/female_icon"/>
-       </RadioGroup>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rdMale"
+                android:enabled="false"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:textSize="10pt"
+                android:textColor="@color/black"
+                android:text="Male"/>
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/male_icon"/>
+            <RadioButton
+                android:id="@+id/rdFemale"
+                android:enabled="false"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:textSize="10pt"
+                android:textColor="@color/black"
+                android:layout_height="60dp"
+                android:text="Female"/>
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/female_icon"/>
+        </RadioGroup>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

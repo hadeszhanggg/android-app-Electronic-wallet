@@ -161,7 +161,7 @@ public class TransferActivity extends AppCompatActivity implements DataShared {
 
     private void fetchFriends() {
         String authToken = "Bearer " + user.getAccesssToken();
-        apiService.getUnconfirmedFriends(authToken).enqueue(new Callback<List<User>>() {
+        apiService.getAllFriends(authToken).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful() && response.body() != null) {

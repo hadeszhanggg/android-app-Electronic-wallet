@@ -70,7 +70,7 @@ public class PersonalFragment extends Fragment {
     EditText inputUsername, inputEmail, inputPass, inputDateOfBirth, inputAddress;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-
+    private int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
     public PersonalFragment() {
 
     }
@@ -204,7 +204,9 @@ public class PersonalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_READ_EXTERNAL_STORAGE);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_CODE);
+                    Log.e("Permission denied", "No provided permission access to external media file");
+                    openImagePicker();
                 } else {
                     openImagePicker();
                 }
@@ -271,8 +273,8 @@ public class PersonalFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openImagePicker();
             } else {
-                // Quyền bị từ chối, xử lý tình huống này nếu cần
-                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                // Quyền bị từ chối
+                Log.e("Permission denied", "No provided permission access to external media file");
             }
         }
     }
