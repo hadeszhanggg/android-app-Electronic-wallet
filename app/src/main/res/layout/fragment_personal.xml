@@ -50,9 +50,9 @@
     </LinearLayout>
 </LinearLayout>
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="100dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="150dp"
         android:id="@+id/imgAvatar"
         android:src="@drawable/default_avatar"/>
     <LinearLayout
@@ -206,7 +206,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:id="@+id/btnEditInfor"
+        android:id="@+id/btnSave"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"

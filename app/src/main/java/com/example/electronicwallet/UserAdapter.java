@@ -2,6 +2,7 @@ package com.example.electronicwallet;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
 
         User currentUser = getItem(position);
-
         TextView txtUsername = listItemView.findViewById(R.id.txtName);
         TextView txtEmail = listItemView.findViewById(R.id.txtEmail);
         ImageView imgAvatar = listItemView.findViewById(R.id.imageUser);
@@ -67,6 +67,8 @@ public class UserAdapter extends ArrayAdapter<User> {
         txtEmail.setText(currentUser.getEmail());
 
         loadAvatar(currentUser, imgAvatar);
+
+        Log.d("UserAdapter", "User: " + currentUser.getUsername());
 
         return listItemView;
     }
@@ -100,19 +102,16 @@ public class UserAdapter extends ArrayAdapter<User> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<User> filteredList = new ArrayList<>();
-
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(users);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
                 for (User user : users) {
                     if (user.getUsername().toLowerCase().contains(filterPattern) || user.getEmail().toLowerCase().contains(filterPattern)) {
                         filteredList.add(user);
                     }
                 }
             }
-
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
@@ -121,7 +120,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredUsers.clear();
-            filteredUsers.addAll((List) results.values);
+            filteredUsers.addAll((List<User>) results.values);
             notifyDataSetChanged();
         }
     };

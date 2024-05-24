@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.example.electronicwallet.HomeActivity;
 import com.example.electronicwallet.R;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
+import com.example.electronicwallet.network.NodeJsApiClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,10 +37,20 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +62,7 @@ public class PersonalFragment extends Fragment {
     private static final int REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 2;
     protected User user;
     protected Wallet wallet;
-    LinearLayout btnBack;
+    LinearLayout btnBack,btnSave;
     ImageView imgAvatar, unblockUsername, unblockEmail, unblockPass, unblockGender, unblockDateOfBirth, unblockAddress;
     TextView txtName;
     RadioGroup rdGrGender;
@@ -121,6 +133,7 @@ public class PersonalFragment extends Fragment {
         rdFemale = view.findViewById(R.id.rdFemale);
         btnBack = view.findViewById(R.id.btnBack);
         imgAvatar = view.findViewById(R.id.imgAvatar);
+        btnSave=view.findViewById(R.id.btnSave);
     }
 
     public void addEvent() {
@@ -195,6 +208,53 @@ public class PersonalFragment extends Fragment {
                 } else {
                     openImagePicker();
                 }
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String authToken = "Bearer " + user.getAccesssToken();
+                JSONObject requestBody = new JSONObject();
+                try {
+                    requestBody.put("username", inputUsername.getText());
+                    requestBody.put("password", inputPass.getText());
+                    requestBody.put("address",inputAddress.getText());
+                    requestBody.put("email",inputEmail.getText());
+                    String gender;
+                    if(rdMale.isChecked()==true)
+                        gender="true";
+                    else gender="false";
+                    requestBody.put("gender",gender);
+                    requestBody.put("date_of_birth",inputDateOfBirth.getText());
+                    requestBody.put("avatar",user.getAvatar());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Gọi API RegisterPassbook
+                Call<ResponseBody> call = NodeJsApiClient.getNodeJsApiService().editInformation(RequestBody.create(MediaType.parse("application/json"), requestBody.toString()), authToken);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getContext(), "Edit your information successfully!", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            String errorMessage = "";
+                            try {
+                                JSONObject errorBody = new JSONObject(response.errorBody().string());
+                                errorMessage = errorBody.getString("message");
+                            } catch (JSONException | IOException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(getContext(), "Edit your information FAILED!", Toast.LENGTH_LONG).show();
+                            Log.e("API_CALL", "Unsuccessful response: " + response.code());
+                            Log.e("API_CALL", "Unsuccessful response: " + response.message());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("Edit personal information", "Failed when Edit personal information!: " + t.getMessage());                }
+                });
             }
         });
     }

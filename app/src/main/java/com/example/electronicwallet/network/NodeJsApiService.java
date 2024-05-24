@@ -13,6 +13,7 @@
     import retrofit2.http.GET;
     import retrofit2.http.Header;
     import retrofit2.http.POST;
+    import retrofit2.http.PUT;
     import retrofit2.http.Query;
     import com.example.electronicwallet.models.Bill;
 
@@ -41,4 +42,12 @@
         Call<List<Transaction>> getTransactions(@Header("Authorization") String authToken);
         @GET("/users/getAllUser")
         Call<List<User>> getAllUser(@Header("Authorization") String authToken);
+        @GET("/users/getAllFriends")
+        Call<List<User>> getAllFriends(@Header("Authorization") String authToken);
+        @GET("/users/getUnconfirmedFriends")
+        Call<List<User>> getUnconfirmedFriends(@Header("Authorization") String authToken);
+        @POST("/users/addFriend")
+        Call<ResponseBody> addFriend(@Body RequestBody requestBody,@Header("Authorization") String authToken);
+        @PUT("/users/updateUser")
+        Call<ResponseBody> editInformation(@Body RequestBody requestBody,@Header("Authorization") String authToken);
     }
