@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -27,11 +28,12 @@ public class TransferActivity extends AppCompatActivity {
     private ListView listViewUsers;
     private UserAdapter userAdapter;
     private List<User> userList;
-    private List<User> friendList;
+    private List<User> friendList, unconfirmFriendList;
     private Wallet wallet;
     private SearchView searchView;
     private NodeJsApiService apiService;
     private User user;
+    private ImageView imgNotify;
     private LinearLayout btnBack;
 
     @Override
@@ -49,8 +51,10 @@ public class TransferActivity extends AppCompatActivity {
         addControl();
         userList = new ArrayList<>();
         friendList = new ArrayList<>();
+        unconfirmFriendList = new ArrayList<>();
         apiService = NodeJsApiClient.getNodeJsApiService();
         fetchFriends();
+        fetchUnconfirmFriends();
         addEvent();
     }
 
@@ -58,6 +62,7 @@ public class TransferActivity extends AppCompatActivity {
         listViewUsers = findViewById(R.id.listViewUsers);
         searchView = findViewById(R.id.searchView);
         btnBack = findViewById(R.id.btnBack);
+        imgNotify=findViewById(R.id.imgNotify);
     }
 
     protected void addEvent() {
@@ -83,11 +88,39 @@ public class TransferActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
+       imgNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    private void fetchFriends() {
+            }
+        });
+    }
+    private void fetchUnconfirmFriends() {
         String authToken = "Bearer " + user.getAccesssToken();
         apiService.getUnconfirmedFriends(authToken).enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    unconfirmFriendList.clear();
+                    unconfirmFriendList.addAll(response.body());
+                    Log.d("Unconfirm friends", "onResponse: "+unconfirmFriendList.size());
+                    if(unconfirmFriendList.size()>=1)
+                        imgNotify.setImageResource(R.drawable.notify_news);
+                    else imgNotify.setImageResource(R.drawable.notify);
+                } else {
+                    Toast.makeText(TransferActivity.this, "Failed to fetch friends", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(TransferActivity.this, "An error occurred: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void fetchFriends() {
+        String authToken = "Bearer " + user.getAccesssToken();
+        apiService.getAllFriends(authToken).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful() && response.body() != null) {

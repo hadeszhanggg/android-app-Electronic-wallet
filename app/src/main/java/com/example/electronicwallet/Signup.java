@@ -33,7 +33,7 @@ import org.json.JSONException;
 public class Signup extends AppCompatActivity {
     private Spinner spinnerProvince;
     private Button btnSignup, btnTransferToSigninForm;
-    private EditText edtName, edtEmail,  edtDofB, edtPass, edtRePass;
+    private com.google.android.material.textfield.TextInputEditText edtName, edtEmail,  edtDofB, edtPass, edtRePass;
     private RadioGroup rdGroupGender;
     private String  Province;
     private Boolean Gender;

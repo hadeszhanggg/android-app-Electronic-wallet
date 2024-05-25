@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="@color/white"
     tools:context=".fragment.HomeFragment">
+
     <ImageView
         android:layout_gravity="center"
         android:layout_width="50dp"

@@ -58,14 +58,15 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:text="Username:" />
-
-        <EditText
-            android:id="@+id/edtName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:ems="10"
-            android:hint="ex: Vitor Hugo"
-            android:inputType="text" />
+            android:hint="your username...">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/edtName"
+                android:layout_height="60dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,13 +84,17 @@
             android:textColor="@color/black"
             android:textStyle="bold"
             android:text="Email:" />
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="ex: hello@gmail.com"
-        android:inputType="textEmailAddress" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="ex: hello@gmail.com">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/edtEmail"
+                android:inputType="textEmailAddress"
+                android:layout_height="60dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,6 +113,7 @@
             android:textStyle="bold"
             android:text="Address:" />
         <Spinner
+            style="@style/Widget.AppCompat.Spinner.DropDown"
             android:id="@+id/spinnerProvince"
             android:spinnerMode="dialog"
             android:layout_width="match_parent"
@@ -130,13 +136,16 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold" />
-    <EditText
-        android:id="@+id/edtDofB"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="ex: 03/03/2003"
-        android:inputType="date" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="ex: 03/03/2003">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/edtDofB"
+                android:layout_height="60dp"
+                android:inputType="date"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -157,24 +166,26 @@
     <RadioGroup
         android:id="@+id/grRdGender"
         android:layout_width="match_parent"
-        android:layout_height="10pt"
+        android:layout_height="20pt"
         android:orientation="horizontal">
 
-        <RadioButton
+        <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rdMale"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="male"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:theme="@style/MaterialRadioButton"/>
 
-        <RadioButton
+        <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/rdFemale"
             android:layout_width="200dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_height="match_parent"
+            android:theme="@style/MaterialRadioButton"
             android:layout_marginLeft="80dp"
             android:text="female"
             android:textSize="20dp"/>
@@ -197,13 +208,17 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:text="Password:" />
-    <EditText
-        android:id="@+id/edtPass"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="ex: hjadaui2D@!dsa."
-        android:inputType="textPassword" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="ex: hjadaui2D@!dsa.">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/edtPass"
+                android:layout_height="60dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -221,13 +236,17 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:text="Confirm password:" />
-    <EditText
-        android:id="@+id/edtRePass"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="ex: hjadaui2D@!dsa."
-        android:inputType="textPassword" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="ex: hjadaui2D@!dsa.">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/edtRePass"
+                android:layout_height="60dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <Button
         android:id="@+id/btnSignup"
@@ -236,7 +255,7 @@
         android:textStyle="bold"
         android:layout_marginLeft="150dp"
         android:backgroundTint="#dc143c"
-        android:text="Create account" />
+        android:text="Create" />
 
     <Button
         android:id="@+id/btnTransferToSigninForm"

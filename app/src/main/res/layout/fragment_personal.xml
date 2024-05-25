@@ -54,6 +54,7 @@
         android:layout_height="100dp"
         android:layout_marginLeft="150dp"
         android:id="@+id/imgAvatar"
+        android:background="@drawable/oval_shape"
         android:src="@drawable/default_avatar"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,16 +66,20 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/edit_icon"/>
-        <EditText
-            android:id="@+id/inputUsername"
-            android:textSize="10pt"
-            android:enabled="false"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:ems="10"
-            android:inputType="text"
-            android:textColor="@color/black"
-            android:hint="Name" />
+            android:layout_height="wrap_content"
+            android:hint="your name...">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputUsername"
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textSize="10pt"
+                android:ems="10"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,17 +91,21 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/edit_icon"/>
-        <EditText
-            android:id="@+id/inputPassword"
-            android:enabled="false"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:textSize="10pt"
-            android:ems="10"
-            android:textColor="@color/black"
-            android:inputType="text"
-            android:hint="******" />
+            android:layout_height="wrap_content"
+            android:hint="******">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPassword"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textSize="10pt"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,16 +117,21 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/edit_icon"/>
-        <EditText
-            android:id="@+id/inputEmail"
-            android:enabled="false"
-            android:textColor="@color/black"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:ems="10"
-            android:textSize="10pt"
-            android:inputType="text"
-            android:hint="Email" />
+            android:layout_height="wrap_content"
+            android:hint="Email">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textSize="10pt"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -129,16 +143,21 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/edit_icon"/>
-        <EditText
-            android:id="@+id/inputDateOfBirth"
-            android:enabled="false"
-            android:textColor="@color/black"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:ems="10"
-            android:textSize="10pt"
-            android:inputType="text"
-            android:hint="Date of birth" />
+            android:layout_height="wrap_content"
+            android:hint="Date of birth">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDateOfBirth"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textSize="10pt"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -192,17 +211,21 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/edit_icon"/>
-        <EditText
-            android:id="@+id/inputAddress"
-            android:enabled="false"
-            android:textColor="@color/black"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:textSize="10pt"
-            android:inputType="text"
-            android:hint="Address" />
+            android:layout_height="wrap_content"
+            android:hint="Address">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputAddress"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:textSize="10pt"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
