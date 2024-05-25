@@ -32,7 +32,7 @@
         android:layout_height="100dp"
         android:layout_marginLeft="100dp"
         android:orientation="vertical">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgLogo"
             android:layout_width="100dp"
             android:layout_height="80dp"
@@ -49,7 +49,7 @@
             />
     </LinearLayout>
 </LinearLayout>
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="150dp"
@@ -69,7 +69,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="your name...">
+            android:hint="Username">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputUsername"
                 android:textColor="@color/black"
@@ -94,7 +94,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="******">
+            android:hint="password">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputPassword"
                 android:enabled="false"
@@ -104,7 +104,7 @@
                 android:textSize="10pt"
                 android:ems="10"
                 android:textColor="@color/black"
-                android:inputType="text" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
@@ -130,7 +130,7 @@
                 android:textSize="10pt"
                 android:ems="10"
                 android:textColor="@color/black"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
@@ -156,7 +156,7 @@
                 android:textSize="10pt"
                 android:ems="10"
                 android:textColor="@color/black"
-                android:inputType="text" />
+                android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout
@@ -224,7 +224,7 @@
                 android:textSize="10pt"
                 android:ems="10"
                 android:textColor="@color/black"
-                android:inputType="text" />
+                android:inputType="textPostalAddress" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <LinearLayout

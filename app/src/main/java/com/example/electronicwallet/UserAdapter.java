@@ -30,6 +30,7 @@ public class UserAdapter extends ArrayAdapter<User> {
     private List<User> filteredUsers;
     private FirebaseStorage storage;
     private StorageReference storageRef;
+    private de.hdodenhof.circleimageview.CircleImageView imgAvatar;
 
     public UserAdapter(Context context, int resource, List<User> users) {
         super(context, resource, users);
@@ -61,14 +62,15 @@ public class UserAdapter extends ArrayAdapter<User> {
         User currentUser = getItem(position);
         TextView txtUsername = listItemView.findViewById(R.id.txtName);
         TextView txtEmail = listItemView.findViewById(R.id.txtEmail);
-        ImageView imgAvatar = listItemView.findViewById(R.id.imageUser);
+         imgAvatar = listItemView.findViewById(R.id.imgAvatar);
 
         txtUsername.setText(currentUser.getUsername());
         txtEmail.setText(currentUser.getEmail());
-
-        loadAvatar(currentUser, imgAvatar);
-
-        Log.d("UserAdapter", "User: " + currentUser.getUsername());
+        imgAvatar.setImageResource(R.drawable.default_avatar);
+        if(currentUser.getAvatar()!="default")
+            loadAvatar(currentUser, imgAvatar);
+        else imgAvatar.setImageResource(R.drawable.default_avatar);
+        Log.d("UserAdapter", "User: " + currentUser.getUser() + " Avatar: " + currentUser.getAvatar());
 
         return listItemView;
     }
@@ -92,7 +94,6 @@ public class UserAdapter extends ArrayAdapter<User> {
             imgAvatar.setImageResource(R.drawable.default_avatar);
         }
     }
-
     @Override
     public Filter getFilter() {
         return userFilter;

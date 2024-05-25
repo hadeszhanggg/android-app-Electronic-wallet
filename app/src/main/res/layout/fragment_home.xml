@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".fragment.HomeFragment">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_gravity="center"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -36,8 +36,9 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnShow"
+                android:backgroundTint="#dc143c"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/eye_open" />

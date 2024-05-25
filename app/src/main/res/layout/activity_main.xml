@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/banner_ntmoney"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -32,13 +32,12 @@
             android:textColor="#dc143c"
             android:textSize="10pt"
             android:textStyle="bold" />
-        <ImageView
-            android:background="@drawable/oval_shape"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
             android:layout_marginLeft="150dp"
             android:layout_width="100dp"
             android:layout_height="50pt"
-            app:srcCompat="@drawable/logo" />
+            android:src="@drawable/logo" />
     </LinearLayout>
 
     <LinearLayout

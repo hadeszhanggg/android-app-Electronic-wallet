@@ -103,7 +103,6 @@ public class TransferActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     unconfirmFriendList.clear();
                     unconfirmFriendList.addAll(response.body());
-                    Log.d("Unconfirm friends", "onResponse: "+unconfirmFriendList.size());
                     if(unconfirmFriendList.size()>=1)
                         imgNotify.setImageResource(R.drawable.notify_news);
                     else imgNotify.setImageResource(R.drawable.notify);
@@ -120,7 +119,7 @@ public class TransferActivity extends AppCompatActivity {
     }
     private void fetchFriends() {
         String authToken = "Bearer " + user.getAccesssToken();
-        apiService.getAllFriends(authToken).enqueue(new Callback<List<User>>() {
+        apiService.getUnconfirmedFriends(authToken).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful() && response.body() != null) {

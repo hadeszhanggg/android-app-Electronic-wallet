@@ -7,7 +7,7 @@
     android:gravity="center"
     tools:context="fragment.PayFragment">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/billImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
