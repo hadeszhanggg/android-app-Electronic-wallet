@@ -26,10 +26,18 @@ import com.example.electronicwallet.network.NodeJsApiService;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import com.example.electronicwallet.Interface.DataShared;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class TransferActivity extends AppCompatActivity implements DataShared {
     private ListView listViewUsers;
     private UserAdapter userAdapter;
@@ -115,21 +123,59 @@ public class TransferActivity extends AppCompatActivity implements DataShared {
         FriendRequestAdapter adapter = new FriendRequestAdapter(this, unconfirmFriendList, new FriendRequestAdapter.OnItemClickListener() {
             @Override
             public void onConfirmClick(User user) {
-
+                handleFriendRequest(user, "agree");
             }
 
             @Override
             public void onCancelClick(User user) {
-                // Handle cancel click
+                handleFriendRequest(user, "refuse");
             }
         });
 
         listViewRequests.setAdapter(adapter);
-
         btnClose.setOnClickListener(v -> dialog.dismiss());
-
         dialog.show();
     }
+
+    private void handleFriendRequest(User selectedUser, String request) {
+        String authToken = "Bearer " + user.getAccesssToken();
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("friendId", selectedUser.getID());
+            requestBody.put("request",request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Call<ResponseBody> call = NodeJsApiClient.getNodeJsApiService().confirmFriend(RequestBody.create(MediaType.parse("application/json"), requestBody.toString()), authToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if(request.equals("agree")) {
+                        Toast.makeText(TransferActivity.this, "Add friend with "+user.getUsername()+" successfully!", Toast.LENGTH_SHORT).show();
+                        // Load user to friend list
+                        loadUserToFriendList(selectedUser);
+                    } else {
+                        Toast.makeText(TransferActivity.this, "Refused request add friend from "+user.getUsername()+" successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                    unconfirmFriendList.remove(selectedUser);
+                } else {
+                    Log.e("API CALL", "onResponse: "+response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("API CALL", "onResponse: "+t.getMessage());
+            }
+        });
+    }
+
+    private void loadUserToFriendList(User newUser) {
+        friendList.add(newUser);
+        userAdapter.notifyDataSetChanged();
+    }
+
     //Interface shared data giua cac activity va fragment nham dam bao du lieu wallet luon chinh xac!
     @Override
     public void dataShared(Wallet updatedWallet) {

@@ -44,8 +44,16 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.txtName.setText(user.getUsername());
         holder.txtEmail.setText(user.getEmail());
 
-        holder.btnConfirm.setOnClickListener(v -> listener.onConfirmClick(user));
-        holder.btnCancel.setOnClickListener(v -> listener.onCancelClick(user));
+        holder.btnConfirm.setOnClickListener(v -> {
+            listener.onConfirmClick(user);
+            requestList.remove(user);
+            notifyDataSetChanged();
+        });
+        holder.btnCancel.setOnClickListener(v -> {
+            listener.onCancelClick(user);
+            requestList.remove(user);
+            notifyDataSetChanged();
+        });
     }
 
     @Override

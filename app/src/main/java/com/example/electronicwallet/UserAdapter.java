@@ -70,10 +70,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         if(currentUser.getAvatar()!="default")
             loadAvatar(currentUser, imgAvatar);
         else imgAvatar.setImageResource(R.drawable.default_avatar);
-        Log.d("UserAdapter", "User: " + currentUser.getUser() + " Avatar: " + currentUser.getAvatar());
-
-        Log.d("UserAdapter", "User: " + currentUser.getUsername());
-
         return listItemView;
     }
 

@@ -50,4 +50,6 @@
         Call<ResponseBody> addFriend(@Body RequestBody requestBody,@Header("Authorization") String authToken);
         @PUT("/users/updateUser")
         Call<ResponseBody> editInformation(@Body RequestBody requestBody,@Header("Authorization") String authToken);
+        @POST("/users/confirmFriend")
+        Call<ResponseBody> confirmFriend(@Body RequestBody requestBody,@Header("Authorization") String authToken);
     }
