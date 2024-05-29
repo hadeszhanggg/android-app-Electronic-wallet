@@ -48,11 +48,11 @@
         android:layout_below="@+id/layoutHeader">
         <SearchView
             android:id="@+id/searchView"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content" />
         <ImageView
             android:id="@+id/imgNotify"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:src="@drawable/notify"/>
     </LinearLayout>

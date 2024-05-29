@@ -1,11 +1,17 @@
 package com.example.electronicwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,8 +29,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-public class TransferActivity extends AppCompatActivity {
+import com.example.electronicwallet.Interface.DataShared;
+public class TransferActivity extends AppCompatActivity implements DataShared {
     private ListView listViewUsers;
     private UserAdapter userAdapter;
     private List<User> userList;
@@ -88,12 +94,46 @@ public class TransferActivity extends AppCompatActivity {
                 return true;
             }
         });
-       imgNotify.setOnClickListener(new View.OnClickListener() {
+        imgNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showFriendRequestsDialog();
             }
         });
+    }
+
+    private void showFriendRequestsDialog() {
+        Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.dialog_friend_request);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView btnClose = dialog.findViewById(R.id.btnClose);
+        RecyclerView listViewRequests = dialog.findViewById(R.id.listViewRequests);
+        listViewRequests.setLayoutManager(new LinearLayoutManager(this));
+
+        FriendRequestAdapter adapter = new FriendRequestAdapter(this, unconfirmFriendList, new FriendRequestAdapter.OnItemClickListener() {
+            @Override
+            public void onConfirmClick(User user) {
+
+            }
+
+            @Override
+            public void onCancelClick(User user) {
+                // Handle cancel click
+            }
+        });
+
+        listViewRequests.setAdapter(adapter);
+
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+    //Interface shared data giua cac activity va fragment nham dam bao du lieu wallet luon chinh xac!
+    @Override
+    public void dataShared(Wallet updatedWallet) {
+        this.wallet = updatedWallet;
     }
     private void fetchUnconfirmFriends() {
         String authToken = "Bearer " + user.getAccesssToken();
@@ -103,9 +143,10 @@ public class TransferActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     unconfirmFriendList.clear();
                     unconfirmFriendList.addAll(response.body());
-                    if(unconfirmFriendList.size()>=1)
+                    if(unconfirmFriendList.size() >= 1)
                         imgNotify.setImageResource(R.drawable.notify_news);
-                    else imgNotify.setImageResource(R.drawable.notify);
+                    else
+                        imgNotify.setImageResource(R.drawable.notify);
                 } else {
                     Toast.makeText(TransferActivity.this, "Failed to fetch friends", Toast.LENGTH_SHORT).show();
                 }
@@ -117,6 +158,7 @@ public class TransferActivity extends AppCompatActivity {
             }
         });
     }
+
     private void fetchFriends() {
         String authToken = "Bearer " + user.getAccesssToken();
         apiService.getUnconfirmedFriends(authToken).enqueue(new Callback<List<User>>() {
