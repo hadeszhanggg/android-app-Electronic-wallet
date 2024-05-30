@@ -1,38 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".chat">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="634dp"
-        android:orientation="vertical">
-        <ListView
-            android:id="@+id/listViewMessages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    android:background="@color/white"
+    tools:context=".ChatActivity">
 
-    </LinearLayout>
-    <LinearLayout
+    <ListView
+        android:id="@+id/listViewMessages"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:backgroundTint="#1e90ff"
+        android:layout_height="0dp"
+        android:layout_above="@+id/layoutSendMessage"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/layoutSendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/btnSend"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="Send message"
-           android:backgroundTint="#1e90ff"
-            app:srcCompat="@drawable/chat_icon" />
-        <EditText
-            android:id="@+id/mInputMessageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="Enter message" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type a message" />
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
