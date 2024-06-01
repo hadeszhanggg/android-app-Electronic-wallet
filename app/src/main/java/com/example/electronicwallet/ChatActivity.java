@@ -21,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -30,6 +31,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.nio.charset.StandardCharsets;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
 public class ChatActivity extends AppCompatActivity {
     private User currentUser;
@@ -63,11 +67,10 @@ public class ChatActivity extends AppCompatActivity {
         chatDocId = currentUser.getID().compareTo(selectedUser.getID()) < 0 ?
                 currentUser.getID() + "_" + selectedUser.getID() : selectedUser.getID() + "_" + currentUser.getID();
 
-        // Đảm bảo rằng bạn đang sử dụng URL đúng của Firebase Realtime Database trong vùng của bạn
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://e-wallet-8e979-default-rtdb.asia-southeast1.firebasedatabase.app");
         chatRef = database.getReference().child("chats").child(chatDocId);
 
-        chatAdapter = new ChatAdapter(this, new ArrayList<>());
+        chatAdapter = new ChatAdapter(this, new ArrayList<>(), currentUser);
         listViewMessages.setAdapter(chatAdapter);
 
         loadChatHistory();
@@ -83,6 +86,23 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void loadChatHistory() {
+        String fileName = chatDocId + ".txt";
+        StorageReference fileRef = storageRef.child("Chat/" + fileName);
+
+        fileRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(bytes -> {
+            String content = new String(bytes, StandardCharsets.UTF_8);
+            //Khai báo listType với kiểu "ChatMessage" để lấy ra danh sách các tin nhánh
+            Type listType = new TypeToken<List<ChatMessage>>() {}.getType();
+            //Đọc theo json lưu vào list messages
+            List<ChatMessage> messages = gson.fromJson(content, listType);
+            chatAdapter.clear();
+            chatAdapter.addAll(messages);
+        }).addOnFailureListener(e -> {
+            Toast.makeText(ChatActivity.this, "Failed to load chat history from storage", Toast.LENGTH_SHORT).show();
+            Log.e("ChatActivity", "Failed to load chat history", e);
+        });
+
+        //lắng nghe thay đổi từ Firebase Realtime Database để cập nhật tin nhắn mới
         chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -97,7 +117,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ChatActivity.this, "Failed to load chat history", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChatActivity.this, "Failed to load chat history from database", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -128,7 +148,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void uploadChatFile(String content) {
         String fileName = chatDocId + ".txt";
-        StorageReference fileRef = storageRef.child(fileName);
+        StorageReference fileRef = storageRef.child("Chat/" + fileName);
         InputStream stream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
         Log.d("Upload txt chat file", "uploadChatFile: success!");
         UploadTask uploadTask = fileRef.putStream(stream);
