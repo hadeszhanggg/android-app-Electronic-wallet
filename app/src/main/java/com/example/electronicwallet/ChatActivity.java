@@ -3,8 +3,10 @@ package com.example.electronicwallet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -47,15 +49,12 @@ public class ChatActivity extends AppCompatActivity {
     private Gson gson;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-
+    private LinearLayout btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-        listViewMessages = findViewById(R.id.listViewMessages);
-        editTextMessage = findViewById(R.id.editTextMessage);
-        buttonSend = findViewById(R.id.buttonSend);
+        addControl();
         gson = new Gson();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
@@ -72,9 +71,22 @@ public class ChatActivity extends AppCompatActivity {
 
         chatAdapter = new ChatAdapter(this, new ArrayList<>(), currentUser);
         listViewMessages.setAdapter(chatAdapter);
-
         loadChatHistory();
-
+        addEvent();
+    }
+    private void addControl(){
+        btnBack=findViewById(R.id.btnBack);
+        listViewMessages = findViewById(R.id.listViewMessages);
+        editTextMessage = findViewById(R.id.editTextMessage);
+        buttonSend = findViewById(R.id.buttonSend);
+    }
+    private void addEvent(){
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         buttonSend.setOnClickListener(v -> {
             String messageContent = editTextMessage.getText().toString();
             if (!messageContent.isEmpty()) {
@@ -84,7 +96,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-
     private void loadChatHistory() {
         String fileName = chatDocId + ".txt";
         StorageReference fileRef = storageRef.child("Chat/" + fileName);

@@ -1,6 +1,7 @@
 package com.example.electronicwallet;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,12 +13,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.electronicwallet.fragment.RegisterPassbookFragment;
+import com.example.electronicwallet.fragment.TransferMoneyFragment;
+import com.example.electronicwallet.models.Passbook;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Wallet;
 import com.example.electronicwallet.network.NodeJsApiClient;
@@ -49,7 +55,7 @@ public class TransferActivity extends AppCompatActivity implements DataShared {
     private User user;
     private ImageView imgNotify;
     private LinearLayout btnBack;
-
+    private RelativeLayout layoutTransfer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +83,7 @@ public class TransferActivity extends AppCompatActivity implements DataShared {
         searchView = findViewById(R.id.searchView);
         btnBack = findViewById(R.id.btnBack);
         imgNotify=findViewById(R.id.imgNotify);
+        layoutTransfer=findViewById(R.id.layoutTransfer);
     }
 
     protected void addEvent() {
@@ -108,8 +115,26 @@ public class TransferActivity extends AppCompatActivity implements DataShared {
                 showFriendRequestsDialog();
             }
         });
+        listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User selectedUser = (User) parent.getItemAtPosition(position);
+                showTransferMoneyFragment(user, selectedUser, wallet);
+            }
+        });
     }
-
+    private void showTransferMoneyFragment(User user, User selectedUser,Wallet wallet) {
+        TransferMoneyFragment fragment = TransferMoneyFragment.newInstance(user, selectedUser,wallet,this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        transaction.add(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .commit();
+        layoutTransfer.setAlpha(0.7f);
+    }
+    public void onFragmentClosed() {
+        layoutTransfer.setAlpha(1.0f);
+    }
     private void showFriendRequestsDialog() {
         Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialog.setContentView(R.layout.dialog_friend_request);

@@ -4,13 +4,55 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ChatActivity">
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/back_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Back"
+                android:textSize="10pt" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="100dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/oval_shape"
+                android:src="@drawable/logo"
+                android:gravity="center" />
+
+        </LinearLayout>
+    </LinearLayout>
     <ListView
         android:id="@+id/listViewMessages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_below="@+id/layoutHeader"
         android:layout_above="@+id/layoutSendMessage"
-        android:layout_alignParentTop="true" />
+        />
 
     <LinearLayout
         android:id="@+id/layoutSendMessage"
@@ -24,6 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/black"
             android:hint="Type a message" />
 
         <Button
