@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.example.electronicwallet.models.Bill;
 import com.example.electronicwallet.models.Voucher;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class VoucherAdapter extends ArrayAdapter<Voucher> {
     private Context context;
@@ -38,6 +40,7 @@ public class VoucherAdapter extends ArrayAdapter<Voucher> {
         TextView textDescription = listItemView.findViewById(R.id.textDescription);
         TextView textDiscount = listItemView.findViewById(R.id.textDiscount);
         TextView textType = listItemView.findViewById(R.id.textType);
+        TextView txtExp=listItemView.findViewById(R.id.txtExp);
         if ("electric".equals(currentVoucher.getType())) {
             imageVoucher.setImageResource(R.drawable.voucher_electric);
         } else if ("water".equals(currentVoucher.getType())) {
@@ -47,8 +50,11 @@ public class VoucherAdapter extends ArrayAdapter<Voucher> {
         }else
                 imageVoucher.setImageResource(R.drawable.voucher_wifi);
         textDescription.setText(currentVoucher.getDescription());
-        textDiscount.setText(String.valueOf(currentVoucher.getDiscount()));
+        textDiscount.setText(String.format("%.2f%%",currentVoucher.getDiscount()));
         textType.setText(String.valueOf(currentVoucher.getType()));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy (HH:mm:ss)", Locale.getDefault());
+        String formattedDate = dateFormat.format(currentVoucher.getExp());
+        txtExp.setText("Exp: " + formattedDate);
         return listItemView;
     }
 }

@@ -13,7 +13,7 @@
             android:layout_height="match_parent"/>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical">
 
@@ -48,6 +48,14 @@
                     android:textColor="@color/black"
                     android:text="Total" />
             </LinearLayout>
+            <TextView
+                android:id="@+id/txtExp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8pt"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:text="Exp" />
         </LinearLayout>
-
     </LinearLayout>

@@ -35,11 +35,4 @@
         android:background="@drawable/check_yes"
         android:layout_alignParentEnd="true" />
 
-    <ImageButton
-        android:id="@+id/btnCancel"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/check_no"
-        android:layout_toStartOf="@id/btnConfirm"
-        android:layout_marginEnd="10dp" />
 </RelativeLayout>

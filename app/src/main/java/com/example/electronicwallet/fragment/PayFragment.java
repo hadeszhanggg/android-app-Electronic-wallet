@@ -3,7 +3,6 @@ package com.example.electronicwallet.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,12 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.electronicwallet.FriendRequestAdapter;
 import com.example.electronicwallet.Interface.DataShared;
 import com.example.electronicwallet.ListBillActivity;
-import com.example.electronicwallet.ListVoucherActivity;
 import com.example.electronicwallet.R;
-import com.example.electronicwallet.VoucherAdapter;
 import com.example.electronicwallet.models.Bill;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.models.Voucher;
@@ -38,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -46,26 +43,26 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import com.example.electronicwallet.network.NodeJsApiService;
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PayFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class PayFragment extends Fragment {
     private static DataShared listener;
-    private ImageView BillImageView,btnVoucher;
+    private ImageView BillImageView, btnVoucher;
     private TextView expiryDaysTextView, descriptionTextView, totalTextView;
     private Button btnPay, btnClose;
     protected Bill bill;
     protected User user;
     protected Wallet wallet;
     private List<Voucher> allVouchers;
-    public PayFragment() {
+    private Dialog voucherDialog;
+    private Voucher selectedVoucher;
+    DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
 
+    public PayFragment() {
+        // Required empty public constructor
     }
-    public static PayFragment newInstance(Bill bill,User user, Wallet wallet, DataShared passbookRegisteredListener) {
-        listener = passbookRegisteredListener;
+
+    public static PayFragment newInstance(Bill bill, User user, Wallet wallet, DataShared dataShared) {
+        listener = dataShared;
         PayFragment fragment = new PayFragment();
         Bundle args = new Bundle();
         args.putSerializable("bill", bill);
@@ -84,6 +81,7 @@ public class PayFragment extends Fragment {
             wallet = (Wallet) getArguments().getSerializable("wallet");
         }
     }
+
     private void initView(View view) {
         BillImageView = view.findViewById(R.id.billImageView);
         expiryDaysTextView = view.findViewById(R.id.expiryDaysTextView);
@@ -91,9 +89,10 @@ public class PayFragment extends Fragment {
         totalTextView = view.findViewById(R.id.totalTextView);
         btnPay = view.findViewById(R.id.btnPay);
         btnClose = view.findViewById(R.id.btnClose);
-        btnVoucher=view.findViewById(R.id.btnVoucher);
+        btnVoucher = view.findViewById(R.id.btnVoucher);
     }
-    protected void addEvent(){
+
+    protected void addEvent() {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +112,7 @@ public class PayFragment extends Fragment {
             }
         });
     }
+
     private void fetchVouchersByType(String type) {
         String authToken = "Bearer " + user.getAccesssToken();
         JSONObject requestBody = new JSONObject();
@@ -143,32 +143,42 @@ public class PayFragment extends Fragment {
     }
 
     private void showVoucherDialog() {
-        Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        dialog.setContentView(R.layout.dialog_use_voucher);
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        voucherDialog = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        voucherDialog.setContentView(R.layout.dialog_use_voucher);
+        voucherDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        voucherDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        ImageView btnClose = dialog.findViewById(R.id.btnClose);
-        RecyclerView listViewRequests = dialog.findViewById(R.id.listViewRequests);
+        ImageView btnClose = voucherDialog.findViewById(R.id.btnClose);
+        RecyclerView listViewRequests = voucherDialog.findViewById(R.id.listViewRequests);
         listViewRequests.setLayoutManager(new LinearLayoutManager(getContext()));
 
         UseVoucherAdapter adapter = new UseVoucherAdapter(getContext(), allVouchers, new UseVoucherAdapter.OnItemClickListener() {
             @Override
             public void onConfirmClick(Voucher voucher) {
-                // Handle confirm voucher logic here
+                applyVoucher(voucher);
+                voucherDialog.dismiss();
             }
         });
 
         listViewRequests.setAdapter(adapter);
-        btnClose.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
+        btnClose.setOnClickListener(v -> voucherDialog.dismiss());
+        voucherDialog.show();
     }
-    private void closeFragment(){
+
+    private void applyVoucher(Voucher voucher) {
+        selectedVoucher = voucher;
+        double discountAmount = bill.getTotal() * voucher.getDiscount();
+        String totalText = decimalFormat.format(bill.getTotal());
+        totalTextView.setText(totalText + " (-" + decimalFormat.format(discountAmount) + "đ)");
+    }
+
+    private void closeFragment() {
         if (getActivity() != null && getActivity() instanceof ListBillActivity) {
             ((ListBillActivity) getActivity()).onFragmentClosed();
         }
         getActivity().getSupportFragmentManager().popBackStack();
     }
+
     private void showDialogConfirmation() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Confirmation");
@@ -183,29 +193,34 @@ public class PayFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
     private void payTheBill() {
         String authToken = "Bearer " + user.getAccesssToken();
-        // Tạo JSONObject chứa dữ liệu cần gửi đi
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("billId", bill.getId());
+            if (selectedVoucher != null) {
+                requestBody.put("voucherId", selectedVoucher.getId());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        // Gọi API RegisterPassbook
+
         Call<ResponseBody> call = NodeJsApiClient.getNodeJsApiService().payBill(RequestBody.create(MediaType.parse("application/json"), requestBody.toString()), authToken);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    double discountAmount = 0;
+                    if (selectedVoucher != null) {
+                        discountAmount = bill.getTotal() * selectedVoucher.getDiscount();
+                    }
+                    wallet.setAccount_balance(wallet.getAccount_balance() - (bill.getTotal() - discountAmount));
                     Toast.makeText(getContext(), "Pay this bill successfully!", Toast.LENGTH_LONG).show();
-                    wallet.setAccount_balance(wallet.getAccount_balance()-bill.getTotal());
                     listener.dataShared(wallet);
-                    Log.d("API_CALL","Acount balance: "+ wallet.getAccount_balance().toString() );
                     ((ListBillActivity) getActivity()).removeBillFromList(bill);
                     closeFragment();
-                }
-                else {
+                } else {
                     String errorMessage = "";
                     try {
                         JSONObject errorBody = new JSONObject(response.errorBody().string());
@@ -213,16 +228,17 @@ public class PayFragment extends Fragment {
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }
-                    Toast.makeText(getContext(), "Pay this bill FAILED!", Toast.LENGTH_LONG).show();
-                    Log.e("API_CALL", "Unsuccessful response: " + response.code());
-                    Log.e("API_CALL", "Unsuccessful response: " + response.message());
+                    Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Register passbook", "Failed when pay this bill!: " + t.getMessage());                }
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
+
     private void populateBillData() {
         if (bill != null) {
             if (bill.getType().equals("electric"))
@@ -232,9 +248,10 @@ public class PayFragment extends Fragment {
             else BillImageView.setImageResource(R.drawable.telecom_bill);
             expiryDaysTextView.setText(bill.getExpiryDay().toString());
             descriptionTextView.setText(bill.getDescription());
-            totalTextView.setText(String.valueOf(bill.getTotal()));
+            totalTextView.setText(decimalFormat.format(bill.getTotal())+ " - VNĐ");
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

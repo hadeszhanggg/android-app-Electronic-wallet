@@ -3,6 +3,7 @@ package com.example.electronicwallet;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -81,7 +82,10 @@ private Wallet wallet;
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("Wallet",wallet);
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

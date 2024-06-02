@@ -65,7 +65,7 @@ public class UseVoucherAdapter extends RecyclerView.Adapter<UseVoucherAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName,txtDiscount;
-        ImageButton btnConfirm, btnCancel;
+        ImageButton btnConfirm;
         ImageView imgVoucher;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,7 +73,6 @@ public class UseVoucherAdapter extends RecyclerView.Adapter<UseVoucherAdapter.Vi
             txtName = itemView.findViewById(R.id.txtName);
             txtDiscount = itemView.findViewById(R.id.txtDiscount);
             btnConfirm = itemView.findViewById(R.id.btnConfirm);
-            btnCancel = itemView.findViewById(R.id.btnCancel);
         }
     }
 }
