@@ -3,7 +3,7 @@ package com.example.electronicwallet.models;
 import java.util.Date;
 
 public class Voucher {
-    String id, voucherName, description,type;
+    String id, voucher_name, description,type;
     Double discount;
     Date exp, usedDated;
     Boolean used;
@@ -11,9 +11,9 @@ public class Voucher {
     public Voucher() {
     }
 
-    public Voucher(String id, String voucherName, String description, Double discount, Date exp, Date usedDated, Boolean used,String type) {
+    public Voucher(String id, String voucher_name, String description, Double discount, Date exp, Date usedDated, Boolean used,String type) {
         this.id = id;
-        this.voucherName = voucherName;
+        this.voucher_name = voucher_name;
         this.description = description;
         this.discount = discount;
         this.exp = exp;
@@ -31,11 +31,11 @@ public class Voucher {
     }
 
     public String getVoucherName() {
-        return voucherName;
+        return voucher_name;
     }
 
     public void setVoucherName(String voucherName) {
-        this.voucherName = voucherName;
+        this.voucher_name = voucherName;
     }
 
     public String getDescription() {

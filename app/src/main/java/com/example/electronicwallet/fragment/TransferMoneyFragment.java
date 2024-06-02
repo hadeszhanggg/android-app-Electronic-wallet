@@ -51,7 +51,7 @@ import retrofit2.Response;
  */
 public class TransferMoneyFragment extends Fragment {
     private static DataShared listener;
-    private ImageView avatar;
+    private com.google.android.material.imageview.ShapeableImageView avatar;
     private TextView userName, userEmail;
     private Button btnTransfer, btnClose;
     protected User user, selectedUser;

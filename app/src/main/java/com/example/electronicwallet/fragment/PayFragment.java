@@ -1,25 +1,36 @@
 package com.example.electronicwallet.fragment;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.electronicwallet.FriendRequestAdapter;
 import com.example.electronicwallet.Interface.DataShared;
 import com.example.electronicwallet.ListBillActivity;
+import com.example.electronicwallet.ListVoucherActivity;
 import com.example.electronicwallet.R;
+import com.example.electronicwallet.VoucherAdapter;
 import com.example.electronicwallet.models.Bill;
 import com.example.electronicwallet.models.User;
+import com.example.electronicwallet.models.Voucher;
 import com.example.electronicwallet.models.Wallet;
 import com.example.electronicwallet.network.NodeJsApiClient;
 
@@ -27,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -34,7 +46,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+import com.example.electronicwallet.network.NodeJsApiService;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PayFragment#newInstance} factory method to
@@ -42,12 +54,13 @@ import retrofit2.Response;
  */
 public class PayFragment extends Fragment {
     private static DataShared listener;
-    private ImageView BillImageView;
+    private ImageView BillImageView,btnVoucher;
     private TextView expiryDaysTextView, descriptionTextView, totalTextView;
     private Button btnPay, btnClose;
     protected Bill bill;
     protected User user;
     protected Wallet wallet;
+    private List<Voucher> allVouchers;
     public PayFragment() {
 
     }
@@ -78,6 +91,7 @@ public class PayFragment extends Fragment {
         totalTextView = view.findViewById(R.id.totalTextView);
         btnPay = view.findViewById(R.id.btnPay);
         btnClose = view.findViewById(R.id.btnClose);
+        btnVoucher=view.findViewById(R.id.btnVoucher);
     }
     protected void addEvent(){
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +106,62 @@ public class PayFragment extends Fragment {
                 showDialogConfirmation();
             }
         });
+        btnVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fetchVouchersByType(bill.getType());
+            }
+        });
+    }
+    private void fetchVouchersByType(String type) {
+        String authToken = "Bearer " + user.getAccesssToken();
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("type", type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Call<List<Voucher>> call = NodeJsApiClient.getNodeJsApiService().getAllVouchersByType(RequestBody.create(MediaType.parse("application/json"), requestBody.toString()), authToken);
+
+        call.enqueue(new Callback<List<Voucher>>() {
+            @Override
+            public void onResponse(Call<List<Voucher>> call, Response<List<Voucher>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    allVouchers = response.body();
+                    showVoucherDialog();
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch vouchers", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Voucher>> call, Throwable t) {
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showVoucherDialog() {
+        Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.dialog_use_voucher);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView btnClose = dialog.findViewById(R.id.btnClose);
+        RecyclerView listViewRequests = dialog.findViewById(R.id.listViewRequests);
+        listViewRequests.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        UseVoucherAdapter adapter = new UseVoucherAdapter(getContext(), allVouchers, new UseVoucherAdapter.OnItemClickListener() {
+            @Override
+            public void onConfirmClick(Voucher voucher) {
+                // Handle confirm voucher logic here
+            }
+        });
+
+        listViewRequests.setAdapter(adapter);
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
     private void closeFragment(){
         if (getActivity() != null && getActivity() instanceof ListBillActivity) {

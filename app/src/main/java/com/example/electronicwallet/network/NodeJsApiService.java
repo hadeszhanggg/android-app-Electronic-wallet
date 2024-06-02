@@ -30,6 +30,8 @@
         Call<List<Bill>> getAllBills(@Header("Authorization") String authToken);
         @GET("users/getAllVouchers")
         Call<List<Voucher>> getAllVouchers(@Header("Authorization") String authToken);
+        @POST("users/getUnusedVouchersByType")
+        Call<List<Voucher>> getAllVouchersByType(@Body RequestBody requestBody, @Header("Authorization") String authToken);
         @GET("users/getAllPassbook")
         Call<List<Passbook>> getAllPassbook();
         @POST("/users/passbookRegistration")

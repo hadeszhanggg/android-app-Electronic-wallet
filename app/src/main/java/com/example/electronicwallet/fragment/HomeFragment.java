@@ -16,13 +16,16 @@
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.Button;
+    import android.widget.ImageButton;
     import android.widget.LinearLayout;
+    import android.widget.RelativeLayout;
     import android.widget.TextView;
 
     import com.example.electronicwallet.DepositActivity;
     import com.example.electronicwallet.InvestActivity;
     import com.example.electronicwallet.ListBillActivity;
     import com.example.electronicwallet.ListVoucherActivity;
+    import com.example.electronicwallet.MainActivity;
     import com.example.electronicwallet.R;
     import com.example.electronicwallet.TransactionActivity;
     import com.example.electronicwallet.TransferActivity;
@@ -38,10 +41,10 @@
         private  static  final int MY_REQUEST_CODE=12;
         private  User user;
         private Wallet wallet;
-        Button btnShow;
+        ImageButton btnShow;
         TextView txtShow, txtSoDu,txtUser;
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##");
-        LinearLayout customBtnShow, btnDeposit, btnListBill,btnVouchers,btnInvest,btnTransactions,btnTransfer;
+        LinearLayout customBtnShow, btnDeposit, btnListBill,btnVouchers,btnInvest,btnTransactions,btnTransfer, btnLogout;
         public HomeFragment() {
         }
 
@@ -81,6 +84,7 @@
            btnVouchers=view.findViewById(R.id.btnVouchers);
             btnTransactions=view.findViewById(R.id.btnTransactions);
             btnTransfer=view.findViewById(R.id.btnTransfer);
+            btnLogout=view.findViewById(R.id.btnLogout);
         }
       public void addEvent()
       {
@@ -148,6 +152,15 @@
                   intent.putExtra("User", user);
                   intent.putExtra("Wallet", wallet);
                   startActivityForResult(intent, MY_REQUEST_CODE);
+              }
+          });
+          btnLogout.setOnClickListener(new View.OnClickListener(){
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(getActivity(), MainActivity.class);
+                  // Xoa toan bo activity va fragment
+                  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                  startActivity(intent);
               }
           });
       }
