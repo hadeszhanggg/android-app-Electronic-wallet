@@ -33,7 +33,7 @@ public class ChatAdapter extends ArrayAdapter<ChatMessage> {
         if (message.getSenderId().equals(user.getID())) {
             layoutMessageCurrentUser.setVisibility(View.VISIBLE);
             layoutMessageOtherUser.setVisibility(View.GONE);
-
+            
             TextView textViewMessageCurrentUser = convertView.findViewById(R.id.textViewMessageCurrentUser);
             TextView textViewSenderCurrentUser = convertView.findViewById(R.id.textViewSenderCurrentUser);
             TextView textViewTimestampCurrentUser = convertView.findViewById(R.id.textViewTimestampCurrentUser);

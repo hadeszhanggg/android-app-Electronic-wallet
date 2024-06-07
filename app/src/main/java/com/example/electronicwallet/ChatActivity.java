@@ -68,7 +68,6 @@ public class ChatActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://e-wallet-8e979-default-rtdb.asia-southeast1.firebasedatabase.app");
         chatRef = database.getReference().child("chats").child(chatDocId);
-
         chatAdapter = new ChatAdapter(this, new ArrayList<>(), currentUser);
         listViewMessages.setAdapter(chatAdapter);
         loadChatHistory();

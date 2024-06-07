@@ -62,7 +62,7 @@ public class PersonalFragment extends Fragment {
     private static final int REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 2;
     protected User user;
     protected Wallet wallet;
-    LinearLayout btnBack,btnSave;
+    LinearLayout btnSave;
     ImageView imgAvatar, unblockUsername, unblockEmail, unblockPass, unblockGender, unblockDateOfBirth, unblockAddress;
     TextView txtName;
     RadioGroup rdGrGender;
@@ -131,7 +131,6 @@ public class PersonalFragment extends Fragment {
         rdGrGender = view.findViewById(R.id.grRdGender);
         rdMale = view.findViewById(R.id.rdMale);
         rdFemale = view.findViewById(R.id.rdFemale);
-        btnBack = view.findViewById(R.id.btnBack);
         imgAvatar = view.findViewById(R.id.imgAvatar);
         btnSave=view.findViewById(R.id.btnSave);
     }
@@ -193,13 +192,7 @@ public class PersonalFragment extends Fragment {
                 else inputAddress.setEnabled(false);
             }
         });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), HomeActivity.class);
-                startActivity(intent);
-            }
-        });
+
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/layoutIn"
     android:background="@color/white"
     tools:context=".MainActivity">
 
@@ -103,7 +104,14 @@
         android:textColor="@color/white"
         android:backgroundTint="#dc143c"
         android:text="Login" />
-
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtForgotPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#1e90ff"
+        android:text="Forgot password"/>
     <Button
         android:id="@+id/btnTransferToSignupForm"
         android:layout_width="match_parent"

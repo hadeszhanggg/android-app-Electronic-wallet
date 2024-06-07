@@ -1,9 +1,13 @@
 package com.example.electronicwallet;
 
+import com.example.electronicwallet.fragment.ForgotPasswordFragment;
+import com.example.electronicwallet.fragment.RegisterPassbookFragment;
+import com.example.electronicwallet.models.Passbook;
 import com.google.firebase.FirebaseApp;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.location.Location;
@@ -12,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.electronicwallet.network.NodeJsApiService;
@@ -34,9 +39,10 @@ import org.json.JSONException;
 public class MainActivity extends AppCompatActivity {
     private Button btnSignin, btnTransferToSignupForm;
     private NodeJsApiService apiSignin;
+    private LinearLayout layoutIn;
     private locate locate;
     private com.google.android.material.textfield.TextInputEditText edtName,edtPass;
-
+    private com.google.android.material.textview.MaterialTextView txtForgotPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         btnSignin = findViewById(R.id.btnSignin);
         btnTransferToSignupForm = findViewById(R.id.btnTransferToSignupForm);
         edtPass = findViewById(R.id.edtPass);
-        edtName = findViewById(R.id.edtName);  // Sử dụng TextInputEditText thay vì TextInputLayout
+        edtName = findViewById(R.id.edtName);
+        txtForgotPassword=findViewById(R.id.txtForgotPassword);
+        layoutIn=findViewById(R.id.layoutIn);
     }
 
     private void addEvent() {
@@ -72,7 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Close signin form", Toast.LENGTH_SHORT).show();
             }
         });
-
+        txtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showForgotPasswordFragment();
+            }
+        });
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +169,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void showForgotPasswordFragment() {
+        ForgotPasswordFragment fragment = ForgotPasswordFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        transaction.add(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .commit();
+        layoutIn.setAlpha(0.7f);
+    }
+    public void onFragmentClosed() {
+        layoutIn.setAlpha(1.0f);
+    }
     private void sendDataToNextActivity(User user, Wallet wallet) {
         if (user != null) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);

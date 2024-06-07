@@ -54,4 +54,6 @@
         Call<ResponseBody> editInformation(@Body RequestBody requestBody,@Header("Authorization") String authToken);
         @POST("/users/confirmFriend")
         Call<ResponseBody> confirmFriend(@Body RequestBody requestBody,@Header("Authorization") String authToken);
+        @PUT("/auth/forgotPassword")
+        Call<ResponseBody> forgotPassword(@Body RequestBody requestBody);
     }
