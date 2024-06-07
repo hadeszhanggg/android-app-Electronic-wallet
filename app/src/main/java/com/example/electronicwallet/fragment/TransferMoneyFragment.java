@@ -53,7 +53,7 @@ public class TransferMoneyFragment extends Fragment {
     private static DataShared listener;
     private com.google.android.material.imageview.ShapeableImageView avatar;
     private TextView userName, userEmail;
-    private Button btnTransfer, btnClose;
+    private com.google.android.material.button.MaterialButton btnTransfer, btnClose, btnAddFriend;
     protected User user, selectedUser;
     protected Wallet wallet;
     private FirebaseStorage storage;
@@ -102,6 +102,7 @@ public class TransferMoneyFragment extends Fragment {
         userEmail = view.findViewById(R.id.userEmail);
         btnTransfer = view.findViewById(R.id.btnTransfer);
         btnClose = view.findViewById(R.id.btnClose);
+        btnAddFriend=view.findViewById(R.id.btnAddFriend);
     }
 
     private void populateUser(ImageView imgAvatar) {
@@ -128,6 +129,8 @@ public class TransferMoneyFragment extends Fragment {
         btnClose.setOnClickListener(v -> closeFragment());
         // Xử lý sự kiện khi nút đăng ký được click
         btnTransfer.setOnClickListener(v -> showDialogConfirmation());
+        //Xử lý gọi api kết bn khi ng dùng click add friend đc click
+        btnAddFriend.setOnClickListener(v->addFriend(selectedUser));
     }
 
     private void closeFragment() {
@@ -202,6 +205,41 @@ public class TransferMoneyFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Transfer money", "Failed when transfer money!: " + t.getMessage());
+            }
+        });
+    }
+    private void addFriend(User selectedUser){
+        String authToken = "Bearer " + user.getAccesssToken();
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("friendUsernameOrEmail", selectedUser.getUsername());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Call<ResponseBody> call = NodeJsApiClient.getNodeJsApiService().addFriend(RequestBody.create(MediaType.parse("application/json"), requestBody.toString()), authToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Add Friend successfully!", Toast.LENGTH_LONG).show();
+                    closeFragment();
+                } else {
+                    String errorMessage = "";
+                    try {
+                        JSONObject errorBody = new JSONObject(response.errorBody().string());
+                        errorMessage = errorBody.getString("message");
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getContext(), "Add friend failed!", Toast.LENGTH_LONG).show();
+                    Log.e("API_CALL", "Unsuccessful response: " + response.code());
+                    Log.e("API_CALL", "Unsuccessful response: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("ADD FRIEND", "Failed when add friend!: " + t.getMessage());
             }
         });
     }
