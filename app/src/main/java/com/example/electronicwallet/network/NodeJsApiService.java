@@ -56,4 +56,6 @@
         Call<ResponseBody> confirmFriend(@Body RequestBody requestBody,@Header("Authorization") String authToken);
         @PUT("/auth/forgotPassword")
         Call<ResponseBody> forgotPassword(@Body RequestBody requestBody);
+        @POST("/users/addDevice")
+        Call<ResponseBody> sendTokenToServer(@Body RequestBody token, @Header("Authorization") String authToken);
     }

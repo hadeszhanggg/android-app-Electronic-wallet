@@ -60,7 +60,7 @@ public class TransferMoneyFragment extends Fragment {
     private StorageReference storageRef;
 
     public TransferMoneyFragment () {
-        // Required empty public constructor
+
     }
 
     public static TransferMoneyFragment newInstance(User user, User selectedUser, Wallet wallet, DataShared walletDatasharedListener) {

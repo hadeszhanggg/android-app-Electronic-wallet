@@ -4,6 +4,7 @@ import com.example.electronicwallet.fragment.ForgotPasswordFragment;
 import com.example.electronicwallet.fragment.RegisterPassbookFragment;
 import com.example.electronicwallet.models.Passbook;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +25,6 @@ import com.example.electronicwallet.network.NodeJsApiClient;
 import com.example.electronicwallet.models.User;
 import com.example.electronicwallet.controllers.locate;
 import com.example.electronicwallet.models.Wallet;
-
 import org.json.JSONObject;
 import java.io.IOException;
 import okhttp3.MediaType;
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         apiSignin = NodeJsApiClient.getNodeJsApiService();
         locate = new locate(this);
         Location location = locate.getCurrentLocation();
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
         addControl();
         addEvent();
+
     }
 
     private void addControl() {

@@ -112,7 +112,7 @@ public class ForgotPasswordFragment extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(edtPass.getText().equals(edtRePass.getText())){
+                if(edtPass.getText().toString().equals(edtRePass.getText().toString())){
                     JSONObject requestBody = new JSONObject();
                     try {
                         requestBody.put("username", edtName.getText());
